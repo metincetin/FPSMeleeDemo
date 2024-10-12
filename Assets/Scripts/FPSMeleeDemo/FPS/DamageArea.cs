@@ -47,7 +47,7 @@ namespace FPSMeleeDemo.FPS
 			_awaitingDamaging = false;
 		}
 
-		private void OnDrawGizmos()
+		private void OnDrawGizmosSelected()
 		{
 			foreach (var p in _damagePoints)
 			{
@@ -71,10 +71,11 @@ namespace FPSMeleeDemo.FPS
 			foreach (var p in _damagePoints)
 			{
 				var positionWorld = transform.TransformPoint(p.Position);
-				var normalWorld = transform.TransformDirection(p.Normal);
+				var normalWorld = transform.TransformDirection(p.Normal).normalized;
 
 				float effectiveSpeed = Vector3.Dot(vel, normalWorld) * Time.deltaTime;
 
+				Debug.DrawRay(positionWorld, normalWorld * effectiveSpeed, Color.red, 5);
 				if (Physics.Raycast(positionWorld, normalWorld, out var hit, effectiveSpeed))
 				{
 					if (_ignores.Contains(hit.collider))

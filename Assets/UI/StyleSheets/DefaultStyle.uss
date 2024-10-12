@@ -1,0 +1,43 @@
+VisualElement {
+}
+
+Cursor {
+    width: 32px;
+    height: 32px;
+    justify-content: center;
+    align-items: center;
+}
+
+Cursor #lines {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+
+.line.visible
+{
+    opacity:1;
+    background-color:red;
+}
+
+.line {
+    width: 12px;
+    height: 2px;
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    transition-property:all;
+    transition-duration:0.1s;
+    opacity:0;
+    transition-timing-function: ease-out-circ
+}
+
+
+Cursor #mid {
+    border-width: 1px;
+    border-color: black;
+    width: 6px;
+    height: 6px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 100%;
+}

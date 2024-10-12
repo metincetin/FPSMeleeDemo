@@ -17,6 +17,7 @@ namespace FPSMeleeDemo.Movement.Tests
 		private void Awake()
 		{
 			_movement = GetComponent<CharacterMovement>();
+			_movement.Manipulators.Add(new RootMotionVelocityManipulator(GetComponentInChildren<RootMotionController>()));
 		}
 
 		private void OnEnable()

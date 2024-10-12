@@ -218,6 +218,57 @@ CapsuleCollider:
   m_Height: 0.2784152
   m_Direction: 1
   m_Center: {x: 0, y: 0.1392076, z: 0}
+--- !u!1 &98061177
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 98061178}
+  - component: {fileID: 98061179}
+  m_Layer: 0
+  m_Name: Trail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &98061178
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98061177}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 881106272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &98061179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98061177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 447e2ddc7c8d42d46aa2f1da08396988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _emitting: 1
+  m_Duration: 0.2
+  m_Width: 0.5
+  m_Normal: {x: 0, y: 0, z: 1}
+  m_Offset: {x: 0, y: 0, z: 0.5}
+  m_DegreeResolution: 15
+  m_Material: {fileID: 2100000, guid: cd90be6789fe81eaf9aafc87e1332b1d, type: 2}
 --- !u!4 &144031442 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3321919801592875672, guid: b523cb813639ab95fbe527b45544d9d9,
@@ -303,7 +354,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
-  m_ShadowAngle: 2.5
+  m_ShadowAngle: 0.5
 --- !u!4 &157207114
 Transform:
   m_ObjectHideFlags: 0
@@ -369,7 +420,7 @@ MonoBehaviour:
   m_AreaLightShadowCone: 120
   m_UseScreenSpaceShadows: 0
   m_InteractsWithSky: 1
-  m_AngularDiameter: 2.5
+  m_AngularDiameter: 0.5
   m_FlareSize: 2
   m_FlareTint: {r: 1, g: 1, b: 1, a: 1}
   m_FlareFalloff: 4
@@ -400,15 +451,15 @@ MonoBehaviour:
   m_MaxDepthBias: 0.001
   m_ShadowResolution:
     m_Override: 512
-    m_UseOverride: 1
-    m_Level: 0
+    m_UseOverride: 0
+    m_Level: 2
   m_ShadowDimmer: 1
   m_VolumetricShadowDimmer: 1
   m_ShadowFadeDistance: 10000
   m_UseContactShadow:
     m_Override: 0
-    m_UseOverride: 1
-    m_Level: 0
+    m_UseOverride: 0
+    m_Level: 2
   m_RayTracedContactShadow: 0
   m_ShadowTint: {r: 0, g: 0, b: 0, a: 1}
   m_PenumbraTint: 0
@@ -906,6 +957,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1590643291}
+  - {fileID: 98061178}
   m_Father: {fileID: 2011707005}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!144 &1006841193
@@ -2149,6 +2201,12 @@ MonoBehaviour:
     Normal: {x: -1, y: 0, z: 0}
   - Position: {x: 0, y: 0, z: -0.9}
     Normal: {x: 0, y: 0, z: -1}
+--- !u!1 &1635009514 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b523cb813639ab95fbe527b45544d9d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1896423603}
+  m_PrefabAsset: {fileID: 0}
 --- !u!54 &1635585449
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2642,7 +2700,7 @@ Camera:
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
-  m_FOVAxisMode: 0
+  m_FOVAxisMode: 1
   m_Iso: 200
   m_ShutterSpeed: 0.005
   m_Aperture: 16
@@ -2944,7 +3002,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 881106272}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b523cb813639ab95fbe527b45544d9d9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1896423606}
   m_SourcePrefab: {fileID: 100100000, guid: b523cb813639ab95fbe527b45544d9d9, type: 3}
 --- !u!4 &1896423604 stripped
 Transform:
@@ -2952,6 +3014,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1896423603}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1896423606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635009514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb853cffd0e1ab579c04e217ab45b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1948005101
 GameObject:
   m_ObjectHideFlags: 0

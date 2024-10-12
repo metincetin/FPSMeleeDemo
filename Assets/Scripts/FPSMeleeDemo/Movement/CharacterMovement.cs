@@ -1,17 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace FPSMeleeDemo.Movement
 {
-	public interface IMovement
-	{
-		public Vector2 MovementInput { get; set; }
-		public Vector3 Velocity { get; }
-		public bool IsGrounded { get; }
-	}
 
-	public class CharacterMovement : MonoBehaviour, IMovement
+    public class CharacterMovement : MonoBehaviour, IMovement
 	{
 
 		public bool IsGrounded => _characterController.isGrounded;
@@ -28,6 +23,8 @@ namespace FPSMeleeDemo.Movement
 				_movementInput = Vector2.ClampMagnitude(value, 1f);
 			}
 		}
+
+		public List<IMovementVelocityManipulator> Manipulators = new();
 
 		public Vector3 Velocity => _characterController.velocity;
 
@@ -76,14 +73,25 @@ namespace FPSMeleeDemo.Movement
 				transformedInputVector = Quaternion.Euler(0, transform.eulerAngles.y, 0) * transformedInputVector;
 			}
 
-			var inputVelocity = _movementSpeed * transformedInputVector * Time.deltaTime;
+			var inputVelocity = _movementSpeed * transformedInputVector;
 
-			velocity = inputVelocity + Vector3.up * _verticalVelocity * Time.deltaTime;
+			velocity = (inputVelocity + (Vector3.up * _verticalVelocity) + GetTotalManipulatorVelocity()) * Time.deltaTime;
+			Debug.Log(inputVelocity);
 
 			_characterController.Move(velocity);
 		}
 
-		public void Jump()
+        private Vector3 GetTotalManipulatorVelocity()
+        {
+			Vector3 result = Vector3.zero;
+			foreach(var m in Manipulators)
+			{
+				result += m.GetVelocity();
+			}
+			return result;
+        }
+
+        public void Jump()
 		{
 			if (!IsGrounded && !_jumpRequested) return;
 			_jumpRequested = true;

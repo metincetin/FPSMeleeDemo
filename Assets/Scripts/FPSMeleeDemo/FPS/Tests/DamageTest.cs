@@ -64,7 +64,7 @@ namespace FPSMeleeDemo.FPS.Tests
 		{
 			yield return new WaitForSeconds(0.2f);
 			_damageArea.Begin();
-			yield return new WaitForSeconds(0.8f);
+			yield return new WaitForSeconds(1.8f);
 			_damageArea.End();
 		}
 	}
