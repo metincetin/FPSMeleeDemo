@@ -8,17 +8,24 @@ Cursor {
     align-items: center;
 }
 
+.damage-text {
+    color: red;
+    -unity-font-style: bold;
+    font-size: 24;
+    position: absolute;
+    transition-duration: 1s;
+    transition-property:all;
+}
+
 Cursor #lines {
     position: absolute;
     width: 0;
     height: 0;
 }
 
-
-.line.visible
-{
-    opacity:1;
-    background-color:red;
+.line.visible {
+    opacity: 1;
+    background-color: red;
 }
 
 .line {
@@ -26,12 +33,11 @@ Cursor #lines {
     height: 2px;
     position: absolute;
     background-color: rgb(255, 255, 255);
-    transition-property:all;
-    transition-duration:0.1s;
-    opacity:0;
-    transition-timing-function: ease-out-circ
+    transition-property: all;
+    transition-duration: 0.1s;
+    opacity: 0;
+    transition-timing-function: ease-out-circ;
 }
-
 
 Cursor #mid {
     border-width: 1px;

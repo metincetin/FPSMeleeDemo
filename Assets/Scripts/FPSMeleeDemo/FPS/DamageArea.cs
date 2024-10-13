@@ -20,6 +20,8 @@ namespace FPSMeleeDemo.FPS
 		{
 			public Vector3 Position;
 			public Vector3 Normal;
+
+			public Vector3 PreviousPosition { get; set; }
 		}
 
 		[SerializeField]
@@ -29,6 +31,7 @@ namespace FPSMeleeDemo.FPS
 		private bool _awaitingDamaging;
 
 		private HashSet<Collider> _ignores = new(5);
+		private HashSet<Collider> _hits = new(10);
 
 		public event Action<DamageHitInfo> HitReceived;
 
@@ -40,6 +43,8 @@ namespace FPSMeleeDemo.FPS
 		public void Begin()
 		{
 			_awaitingDamaging = true;
+			ResetPreviousPositions();
+			_hits.Clear();
 		}
 
 		public void End()
@@ -52,9 +57,9 @@ namespace FPSMeleeDemo.FPS
 			foreach (var p in _damagePoints)
 			{
 				var position = transform.TransformPoint(p.Position);
-				Gizmos.color = Color.red;
+				Gizmos.color = _awaitingDamaging ? Color.green : Color.red;
 				Gizmos.DrawCube(position, Vector3.one * 0.02f);
-				Debug.DrawRay(position, transform.TransformDirection(p.Normal.normalized), Color.red);
+				Debug.DrawRay(position, transform.TransformDirection(p.Normal.normalized), Gizmos.color);
 				Gizmos.color = Color.white;
 			}
 		}
@@ -64,24 +69,37 @@ namespace FPSMeleeDemo.FPS
 			_ignores.Add(target);
 		}
 
-		private void FixedUpdate()
+		private void ResetPreviousPositions()
+		{
+			foreach(var p in _damagePoints)
+			{
+				p.PreviousPosition = transform.TransformPoint(p.Position);
+			}
+		}
+
+		private void Update()
 		{
 			if (!_awaitingDamaging) return;
-			var vel = _rigidbody.velocity;
-			foreach (var p in _damagePoints)
+            for (int i = 0; i < _damagePoints.Length; i++)
 			{
-				var positionWorld = transform.TransformPoint(p.Position);
+                DamagePoint p = _damagePoints[i];
+
+                var positionWorld = transform.TransformPoint(p.Position);
 				var normalWorld = transform.TransformDirection(p.Normal).normalized;
 
-				float effectiveSpeed = Vector3.Dot(vel, normalWorld) * Time.deltaTime;
+				var vel = (p.PreviousPosition - positionWorld);
 
-				Debug.DrawRay(positionWorld, normalWorld * effectiveSpeed, Color.red, 5);
-				if (Physics.Raycast(positionWorld, normalWorld, out var hit, effectiveSpeed))
+				Debug.DrawRay(positionWorld, vel, Color.red, 5);
+
+				p.PreviousPosition = positionWorld;
+
+				if (Physics.Raycast(positionWorld, vel.normalized, out var hit, vel.magnitude))
 				{
 					if (_ignores.Contains(hit.collider))
 					{
 						continue;
 					}
+					if (_hits.Contains(hit.collider)) continue;
 
 					var negativeVel = Vector3.zero;
 
@@ -90,7 +108,7 @@ namespace FPSMeleeDemo.FPS
 						negativeVel = hit.rigidbody.velocity;
 					}
 
-					Vector3 effectiveVel = vel * effectiveSpeed;
+					Vector3 effectiveVel = vel;// * effectiveSpeed;
 					Vector3 relativeVel = effectiveVel - negativeVel;
 
 
@@ -106,13 +124,15 @@ namespace FPSMeleeDemo.FPS
 
 					if (hit.rigidbody)
 					{
-						hit.rigidbody.AddForceAtPosition(relativeVel * 20, hit.point, ForceMode.Impulse);
+						var bouncePower = Vector3.Dot(-hit.normal, relativeVel);
+						Debug.DrawRay(hit.point, -hit.normal * bouncePower, Color.yellow, 5);
+						hit.rigidbody.AddForceAtPosition(-hit.normal * bouncePower, hit.point, ForceMode.Impulse);
 					}
+
+					_hits.Add(hit.collider);
 					return;
 				}
 			}
 		}
-
-
 	}
 }

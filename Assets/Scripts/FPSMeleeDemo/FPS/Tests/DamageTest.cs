@@ -7,7 +7,8 @@ using System;
 
 namespace FPSMeleeDemo.FPS.Tests
 {
-	public class DamageTest : MonoBehaviour
+
+    public class DamageTest : MonoBehaviour
 	{
 		[SerializeField]
 		private InputFeeder _inputFeeder;
@@ -15,8 +16,9 @@ namespace FPSMeleeDemo.FPS.Tests
 		private DamageArea _damageArea;
 
 		private Animator _animator;
+        private Vector2 _attackDirection;
 
-		private void Awake()
+        private void Awake()
 		{
 			_animator = GetComponentInChildren<Animator>();
 
@@ -24,6 +26,7 @@ namespace FPSMeleeDemo.FPS.Tests
 
 			_damageArea.AddIgnore(GetComponent<Collider>());
 		}
+
 
 		private void OnEnable()
 		{
@@ -43,6 +46,10 @@ namespace FPSMeleeDemo.FPS.Tests
         {
 			StartCoroutine(HandleAnimation());
         }
+
+		private void Update()
+		{
+		}
 
 		private IEnumerator HandleAnimation()
 		{

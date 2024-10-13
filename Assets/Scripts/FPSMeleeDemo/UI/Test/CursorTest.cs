@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using FPSMeleeDemo.Core;
+using FPSMeleeDemo.Gameplay;
+using FPSMeleeDemo.Gameplay.BattleCharacters;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -9,35 +11,33 @@ namespace FPSMeleeDemo.UI.Tests
 {
 	public class CursorTest : MonoBehaviour
 	{
-        private UIDocument _document;
+		private UIDocument _document;
 
-        private Button _invokeDamageButton;
-
-        private void Awake()
+		private void Awake()
 		{
 			_document = GetComponent<UIDocument>();
 
-			_invokeDamageButton = _document.rootVisualElement.Q<Button>("InvokeHitButton");
+			_document.rootVisualElement.Q<Button>("InvokeHitButton").clicked += OnCursorDamageButtonClicked;
+			_document.rootVisualElement.Q<Button>("InvokeDamageTextButton").clicked += OnDamageTextButtonClicked;
 		}
 
-		private void OnEnable()
+		private void OnDamageTextButtonClicked()
 		{
-			_invokeDamageButton.clicked += OnButtonClicked;
+			var damageObject = DamageBuilder.Create(UnityEngine.Random.Range(1, 35)).SetDamagePosition(UnityEngine.Random.onUnitSphere * 5).Build();
+			EventBus<DamageTextInvoker.DamageTextEvent>.Invoke(new DamageTextInvoker.DamageTextEvent
+			{
+				Object = damageObject
+			});
 		}
 
-		private void OnDisable()
+		private void OnCursorDamageButtonClicked()
 		{
-			_invokeDamageButton.clicked -= OnButtonClicked;
-		}
-
-        private void OnButtonClicked()
-        {
 			EventBus<CursorDamageEvent>.Invoke(new CursorDamageEvent());
-        }
+		}
 
-		public class CursorDamageEvent: IEvent
+		public class CursorDamageEvent : IEvent
 		{
 
 		}
-    }
+	}
 }

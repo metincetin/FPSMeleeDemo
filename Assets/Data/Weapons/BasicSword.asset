@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300987cdf071dcd739751285b8974759, type: 3}
+  m_Name: BasicSword
+  m_EditorClassIdentifier: 
+  _graphics: {fileID: 6486916002264326417, guid: c8652d7be2ac99dc5806a10980437c9e,
+    type: 3}
+  _montagePairs:
+    Left: {fileID: 11400000, guid: 0d299193b8fe49d3e9c867cefd972b29, type: 2}
+    Right: {fileID: 11400000, guid: 8a33ed1786315afc8be0481854abc40d, type: 2}
+    Up: {fileID: 11400000, guid: 0d299193b8fe49d3e9c867cefd972b29, type: 2}
+    Down: {fileID: 11400000, guid: 0d299193b8fe49d3e9c867cefd972b29, type: 2}
