@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a7a3385e9ac3a255ad62c439ab666c1, type: 3}
+  m_Name: PhysicsMaterialHitParticle
+  m_EditorClassIdentifier: 
+  _default: {fileID: 5513471688128961520, guid: 7804faaed1cdd515897019e86f289758,
+    type: 3}
+  _data:
+  - Key: {fileID: 13400000, guid: 32ebd500f30647711811b54b8681c20c, type: 2}
+    Value: {fileID: 5513471688128961520, guid: b5f79b8b6d4b8cd2da232a4d4d7e2697, type: 3}

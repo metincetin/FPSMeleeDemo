@@ -13,7 +13,8 @@ namespace FPSMeleeDemo.FPS
 			public Rigidbody Rigidbody;
 			public Collider Collider;
 			public Vector3 RelativeVelocity;
-		}
+            public Vector3 Normal;
+        }
 
 		[System.Serializable]
 		private class DamagePoint
@@ -119,7 +120,8 @@ namespace FPSMeleeDemo.FPS
 						Point = hit.point,
 						Rigidbody = hit.rigidbody,
 						Collider = hit.collider,
-						RelativeVelocity = relativeVel
+						RelativeVelocity = relativeVel,
+						Normal = hit.normal
 					});
 
 					if (hit.rigidbody)

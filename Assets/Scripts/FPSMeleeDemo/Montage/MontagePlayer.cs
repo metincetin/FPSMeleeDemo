@@ -5,28 +5,28 @@ using Action = System.Action;
 
 namespace FPSMeleeDemo.Montage
 {
-    [RequireComponent(typeof(PlayableDirector))]
+	[RequireComponent(typeof(PlayableDirector))]
 	[ExecuteAlways]
 	public partial class MontagePlayer : MonoBehaviour, INotificationReceiver
 	{
 		private MontageHandle _currentMontageHandle;
-		private PlayableDirector _playableDirector;
+		public PlayableDirector PlayableDirector { get; private set; }
 
 		private Action<MontageEvent> _queuedCalls;
 
 		private void Awake()
 		{
-			_playableDirector = GetComponent<PlayableDirector>();
+			PlayableDirector = GetComponent<PlayableDirector>();
 		}
 
 		private void OnEnable()
 		{
-			_playableDirector.stopped += OnDirectorStopped;
+			PlayableDirector.stopped += OnDirectorStopped;
 		}
 
 		private void OnDisable()
 		{
-			_playableDirector.stopped -= OnDirectorStopped;
+			PlayableDirector.stopped -= OnDirectorStopped;
 		}
 
 		public void OnNotify(Playable origin, INotification notification, object context)
@@ -37,7 +37,7 @@ namespace FPSMeleeDemo.Montage
 		public MontageHandle PlayMontage(PlayableAsset asset)
 		{
 			_currentMontageHandle?.InvokeEnded();
-			_playableDirector.Play(asset);
+			PlayableDirector.Play(asset);
 			_currentMontageHandle = new MontageHandle { Montage = asset };
 			return _currentMontageHandle;
 		}
@@ -69,7 +69,7 @@ namespace FPSMeleeDemo.Montage
 				_queuedCalls?.Invoke(new MontageEvent());
 				_queuedCalls = null;
 			}
-			_playableDirector.Stop();
+			PlayableDirector.Stop();
 		}
 
 		public class MontageHandle

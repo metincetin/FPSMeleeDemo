@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using FPSMeleeDemo.Data;
+using FPSMeleeDemo.FX;
 using FPSMeleeDemo.Gameplay;
 using FPSMeleeDemo.Montage;
 using UnityEngine;
@@ -23,9 +24,10 @@ namespace FPSMeleeDemo.FPS
 
 		private AttackAnimationHandler _attackAnimationHandler;
 
+		private IAttackerFXFactory _fxFactory;
+
 		[SerializeField]
 		private Transform _weaponPoint;
-
 
 		private IDamageCauser _damageCauser;
 
@@ -35,6 +37,7 @@ namespace FPSMeleeDemo.FPS
 		{
 			_damageCauser = GetComponent<IDamageCauser>();
 			_attackAnimationHandler = new AttackAnimationHandler(GetComponent<MontagePlayer>());
+			_fxFactory = Resources.Load<AttackerFXFactory>("Factories/AttackerFXFactory");
 
 			if (_weapon)
 			{
@@ -68,6 +71,21 @@ namespace FPSMeleeDemo.FPS
 
         private void OnDamageAreaHitReceived(DamageArea.DamageHitInfo info)
         {
+			_attackAnimationHandler.OnAttackHitReceived(info);
+
+			_fxFactory.CreateHitEffect(info);
+
+			if(TryGetComponent<CinemachineImpulseSource>(out var impulseSource))
+			{
+				impulseSource.GenerateImpulseAtPositionWithVelocity(info.Point, Vector3.up * .050f);
+			}
+
+			var damageArea = WeaponInstance.GetComponentInChildren<DamageArea>();
+			if (damageArea)
+			{
+				damageArea.End();
+			}
+			
 			if (info.Collider.TryGetComponent<IDamageReceiver>(out var damageReceiver))
 			{
 				var damage = DamageBuilder.Create(5)
@@ -76,7 +94,6 @@ namespace FPSMeleeDemo.FPS
 					.Build();
 				damageReceiver.ApplyDamage(damage);
 				DamageCaused?.Invoke(damageReceiver, damage);
-				GetComponent<CinemachineImpulseSource>().GenerateImpulseAtPositionWithVelocity(info.Point, Vector3.up * 5.50f);
 			}
         }
 
