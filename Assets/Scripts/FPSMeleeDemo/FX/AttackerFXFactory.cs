@@ -22,9 +22,9 @@ namespace FPSMeleeDemo.FX
 		{
 			var p = info.Point;
 			var decalInst = UnityEngine.Object.Instantiate(_decalSet.GetOrDefault(info.Collider.sharedMaterial), p + info.Normal * 0.01f, Quaternion.identity);
-			decalInst.transform.forward = -info.Normal;
-			Debug.Log(Mathf.Atan2(info.RelativeVelocity.z, info.RelativeVelocity.x));
-			decalInst.transform.Rotate(info.Normal, Mathf.Atan2(info.RelativeVelocity.z, info.RelativeVelocity.x), Space.World);
+			// decalInst.transform.forward = -info.Normal;
+			decalInst.transform.rotation = Quaternion.LookRotation(info.RelativeVelocity, -info.Normal);
+			decalInst.transform.Rotate(info.Normal, Mathf.Rad2Deg * Mathf.Atan2(info.RelativeVelocity.z, info.RelativeVelocity.x), Space.World);
 			Destroy(decalInst, _releaseDuration);
 
 			var particle = UnityEngine.Object.Instantiate(_particleSet.GetOrDefault(info.Collider.sharedMaterial), p, Quaternion.identity);

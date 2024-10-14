@@ -20,6 +20,10 @@ namespace FPSMeleeDemo.FPS
 
 		[SerializeField]
 		private float _mass;
+
+		[SerializeField]
+		private float _offset;
+
         private float _velocity;
 
         private void Awake()
@@ -31,7 +35,7 @@ namespace FPSMeleeDemo.FPS
 		private void LateUpdate()
 		{
 
-			var t = _target.position.y;
+			var t = _target.position.y + _offset;
 			var pos = transform.position;
 
 			float y = _prevPosition;

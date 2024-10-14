@@ -18,20 +18,25 @@ namespace FPSMeleeDemo.Data
 		[SerializeField]
 		private CardinalAttackMontagePair _montagePairs;
 
-        public override PlayableAsset GetMontage(CardinalDirection direction)
+		[SerializeField]
+		private CardinalAttackMontagePair _reversedPairs;
+
+        public override PlayableAsset GetMontage(CardinalDirection direction, bool reversed = false)
         {
+			var pairs = reversed ? _reversedPairs : _montagePairs;
+
 			switch (direction)
 			{
 				case CardinalDirection.West:
-					return _montagePairs.Left;
+					return pairs.Left;
 				case CardinalDirection.East:
-					return _montagePairs.Right;
+					return pairs.Right;
 				case CardinalDirection.North:
-					return _montagePairs.Up;
+					return pairs.Up;
 				case CardinalDirection.South:
-					return _montagePairs.Down;
+					return pairs.Down;
 			}
-			return _montagePairs.Up;
+			return pairs.Up;
         }
     }
 }

@@ -73,6 +73,15 @@ namespace FPSMeleeDemo.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Block"",
+                    ""type"": ""Button"",
+                    ""id"": ""a68fe8b2-12df-4a16-9de8-67f7013ae2a7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -174,6 +183,17 @@ namespace FPSMeleeDemo.Input
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa681db1-ae8c-452f-b37b-bc06dde9b0d0"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""Block"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -204,6 +224,7 @@ namespace FPSMeleeDemo.Input
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
             m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+            m_Player_Block = m_Player.FindAction("Block", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -270,6 +291,7 @@ namespace FPSMeleeDemo.Input
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Attack;
         private readonly InputAction m_Player_Dash;
+        private readonly InputAction m_Player_Block;
         public struct PlayerActions
         {
             private @GameInput m_Wrapper;
@@ -279,6 +301,7 @@ namespace FPSMeleeDemo.Input
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @Attack => m_Wrapper.m_Player_Attack;
             public InputAction @Dash => m_Wrapper.m_Player_Dash;
+            public InputAction @Block => m_Wrapper.m_Player_Block;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -303,6 +326,9 @@ namespace FPSMeleeDemo.Input
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
+                @Block.started += instance.OnBlock;
+                @Block.performed += instance.OnBlock;
+                @Block.canceled += instance.OnBlock;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -322,6 +348,9 @@ namespace FPSMeleeDemo.Input
                 @Dash.started -= instance.OnDash;
                 @Dash.performed -= instance.OnDash;
                 @Dash.canceled -= instance.OnDash;
+                @Block.started -= instance.OnBlock;
+                @Block.performed -= instance.OnBlock;
+                @Block.canceled -= instance.OnBlock;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -355,6 +384,7 @@ namespace FPSMeleeDemo.Input
             void OnJump(InputAction.CallbackContext context);
             void OnAttack(InputAction.CallbackContext context);
             void OnDash(InputAction.CallbackContext context);
+            void OnBlock(InputAction.CallbackContext context);
         }
     }
 }

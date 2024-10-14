@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030f85c3f73729f4f976f66ffb23b875, type: 3}
   m_Name: AnimationPlayableAsset
   m_EditorClassIdentifier: 
-  m_Clip: {fileID: -203655887218126122, guid: 17df3f7de61d794499b85f2656c921f3, type: 3}
+  m_Clip: {fileID: -8200141586426727565, guid: 85f00a3f3d4e434ec85ee15fa4ce070d, type: 3}
   m_Position: {x: 0, y: 0, z: 0}
   m_EulerAngles: {x: 0, y: 0, z: 0}
   m_UseTrackMatchFields: 1
   m_MatchTargetFields: 63
   m_RemoveStartOffset: 1
-  m_ApplyFootIK: 1
+  m_ApplyFootIK: 0
   m_Loop: 0
   m_Version: 1
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
@@ -47,7 +47,7 @@ MonoBehaviour:
     m_Start: 0
     m_ClipIn: 0
     m_Asset: {fileID: -5998024479907542515}
-    m_Duration: 1.5
+    m_Duration: 1.6833333333333333
     m_TimeScale: 1
     m_ParentTrack: {fileID: -2474383707522796920}
     m_EaseInDuration: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 1
     m_PostExtrapolationTime: Infinity
     m_PreExtrapolationTime: 0
-    m_DisplayName: Sword And Shield Slash(1)
+    m_DisplayName: Armature|1hm_attackright
   m_Markers:
     m_Objects: []
   m_InfiniteClipPreExtrapolation: 0
@@ -125,8 +125,8 @@ MonoBehaviour:
   m_MatchTargetFields: -1
   m_Position: {x: 0, y: 0, z: 0}
   m_EulerAngles: {x: 0, y: 0, z: 0}
-  m_AvatarMask: {fileID: 0}
-  m_ApplyAvatarMask: 0
+  m_AvatarMask: {fileID: 31900000, guid: c3f5d19296e587f4ba20d34a2c1a1a95, type: 2}
+  m_ApplyAvatarMask: 1
   m_TrackOffset: 1
   m_InfiniteClip: {fileID: 0}
   m_OpenClipOffsetRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -188,10 +188,10 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 0.5333333333333333
+    m_Start: 0.2
     m_ClipIn: 0
     m_Asset: {fileID: 593176403068109883}
-    m_Duration: 0.5000000000000001
+    m_Duration: 0.6000000000000001
     m_TimeScale: 1
     m_ParentTrack: {fileID: 7669453717346147024}
     m_EaseInDuration: 0

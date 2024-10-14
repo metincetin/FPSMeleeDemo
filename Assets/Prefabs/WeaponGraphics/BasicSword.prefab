@@ -81,7 +81,7 @@ MonoBehaviour:
   _emitting: 1
   m_Duration: 0.2
   m_Width: 0.5
-  m_Normal: {x: 0, y: 0, z: 1}
+  m_Normal: {x: 0, y: 0, z: 1.5}
   m_Offset: {x: 0, y: 0, z: 0.5}
   m_DegreeResolution: 15
   m_Material: {fileID: 2100000, guid: cd90be6789fe81eaf9aafc87e1332b1d, type: 2}
@@ -201,3 +201,7 @@ MonoBehaviour:
     Normal: {x: -1, y: 0, z: 0}
   - Position: {x: 0, y: 0, z: -0.9}
     Normal: {x: 0, y: 0, z: -1}
+  - Position: {x: 0, y: 0, z: -0.9}
+    Normal: {x: 1, y: 0, z: 0}
+  - Position: {x: 0, y: 0, z: -0.9}
+    Normal: {x: -1, y: 0, z: 0}

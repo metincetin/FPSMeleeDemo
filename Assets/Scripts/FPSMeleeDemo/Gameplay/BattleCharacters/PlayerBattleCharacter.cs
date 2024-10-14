@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 namespace FPSMeleeDemo.Gameplay.BattleCharacters
 {
 
-	public class PlayerBattleCharacter : MonoBehaviour, IBattleCharacter, IDamageReceiver
+    public class PlayerBattleCharacter : MonoBehaviour, IBattleCharacter, IDamageReceiver
 	{
 		private Attributes _attributes;
 		public Attributes Attributes => _attributes;
@@ -24,9 +24,12 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 		private IAttacker _attacker;
 
 		private Vector3 _lastMovement;
+		private Vector3 _lastLookInput;
 
 		private CardinalDirection _blockingDirection;
 		private bool _isBlocking;
+
+		private CharacterLocomotionAnimator _locomotionAnimator;
 
 		public void ApplyDamage(DamageObject damage)
 		{
@@ -45,6 +48,8 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 			_attributes = new Attributes { Damage = 5, Defence = 2, Health = 50 };
 			_movement = GetComponent<IMovement>();
 			_attacker = GetComponent<IAttacker>();
+
+			_locomotionAnimator = new CharacterLocomotionAnimator(GetComponentInChildren<Animator>());
 		}
 
 		private void OnEnable()
@@ -53,6 +58,9 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 			_inputFeeder.GameInput.Player.Jump.performed += OnJumpRequested;
 			_inputFeeder.GameInput.Player.Dash.performed += OnDashRequested;
 			_inputFeeder.GameInput.Player.Attack.performed += OnAttackRequested;
+
+			_inputFeeder.GameInput.Player.Block.performed += OnBlockPerformed;
+			_inputFeeder.GameInput.Player.Block.canceled += OnBlockCanceled;
 
 			_inputFeeder.SetCursor(false);
 		}
@@ -64,12 +72,26 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 			_inputFeeder.GameInput.Player.Dash.performed -= OnDashRequested;
 			_inputFeeder.GameInput.Player.Attack.performed -= OnAttackRequested;
 
+			_inputFeeder.GameInput.Player.Block.performed -= OnBlockPerformed;
+			_inputFeeder.GameInput.Player.Block.canceled -= OnBlockCanceled;
+
 			_inputFeeder.SetCursor(true);
+		}
+
+
+		private void OnBlockPerformed(InputAction.CallbackContext context)
+		{
+			_attacker.SetBlockState(true);
+		}
+
+		private void OnBlockCanceled(InputAction.CallbackContext context)
+		{
+			_attacker.SetBlockState(false);
 		}
 
 		private void OnAttackRequested(InputAction.CallbackContext context)
 		{
-			_attacker.Attack(_inputFeeder.GameInput.Player.Look.ReadValue<Vector2>());
+			_attacker.Attack(_lastLookInput);
 		}
 
 		private void OnJumpRequested(InputAction.CallbackContext context)
@@ -92,7 +114,14 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 
 		private void Update()
 		{
+			var look = _inputFeeder.GameInput.Player.Look.ReadValue<Vector2>();
+			if (look.magnitude > 0)
+			{
+				_lastLookInput = look;
+			}
 			Move();
+			_locomotionAnimator.MovementInput = _movement.MovementInput;
+			_locomotionAnimator.Update();
 		}
 
 		private void Move()

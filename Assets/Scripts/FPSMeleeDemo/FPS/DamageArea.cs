@@ -43,6 +43,7 @@ namespace FPSMeleeDemo.FPS
 
 		public void Begin()
 		{
+			Debug.Log("Begin");
 			_awaitingDamaging = true;
 			ResetPreviousPositions();
 			_hits.Clear();
@@ -132,6 +133,7 @@ namespace FPSMeleeDemo.FPS
 					}
 
 					_hits.Add(hit.collider);
+					_awaitingDamaging = false;
 					return;
 				}
 			}

@@ -10,6 +10,7 @@ using UnityEngine;
 
 namespace FPSMeleeDemo.FPS
 {
+
 	public class Attacker : MonoBehaviour, IAttacker, IWeaponInstanceContainer, IDamageCauser
 	{
 		[SerializeField]
@@ -26,14 +27,16 @@ namespace FPSMeleeDemo.FPS
 
 		private IAttackerFXFactory _fxFactory;
 
+		private BlockHandler _blockHandler;
+
 		[SerializeField]
 		private Transform _weaponPoint;
 
 		private IDamageCauser _damageCauser;
 
-        public event Action<IDamageReceiver, DamageObject> DamageCaused;
+		public event Action<IDamageReceiver, DamageObject> DamageCaused;
 
-        private void Awake()
+		private void Awake()
 		{
 			_damageCauser = GetComponent<IDamageCauser>();
 			_attackAnimationHandler = new AttackAnimationHandler(GetComponent<MontagePlayer>());
@@ -43,6 +46,8 @@ namespace FPSMeleeDemo.FPS
 			{
 				CreateWeapon();
 			}
+
+			_blockHandler = new BlockHandler();
 		}
 
 		private void CreateWeapon()
@@ -69,13 +74,13 @@ namespace FPSMeleeDemo.FPS
 			}
 		}
 
-        private void OnDamageAreaHitReceived(DamageArea.DamageHitInfo info)
-        {
+		private void OnDamageAreaHitReceived(DamageArea.DamageHitInfo info)
+		{
 			_attackAnimationHandler.OnAttackHitReceived(info);
 
 			_fxFactory.CreateHitEffect(info);
 
-			if(TryGetComponent<CinemachineImpulseSource>(out var impulseSource))
+			if (TryGetComponent<CinemachineImpulseSource>(out var impulseSource))
 			{
 				impulseSource.GenerateImpulseAtPositionWithVelocity(info.Point, Vector3.up * .050f);
 			}
@@ -85,7 +90,7 @@ namespace FPSMeleeDemo.FPS
 			{
 				damageArea.End();
 			}
-			
+
 			if (info.Collider.TryGetComponent<IDamageReceiver>(out var damageReceiver))
 			{
 				var damage = DamageBuilder.Create(5)
@@ -95,13 +100,27 @@ namespace FPSMeleeDemo.FPS
 				damageReceiver.ApplyDamage(damage);
 				DamageCaused?.Invoke(damageReceiver, damage);
 			}
-        }
+		}
 
-        public void Attack(Vector2 direction)
+		public void Attack(Vector2 direction)
 		{
-			var montage = _weapon.GetMontage(direction.ToCardinal());
-			Debug.Log(direction.ToCardinal());
-			_attackAnimationHandler.Play(montage);
+			_attackAnimationHandler.Weapon = _weapon;
+			_attackAnimationHandler.Play(direction.ToCardinal());
+		}
+
+		public void SetBlockState(bool value)
+		{
+			if (value)
+			{
+				_blockHandler.BeginBlock();
+				_attackAnimationHandler.BeginBlock();
+			}
+			else
+			{
+				_blockHandler.EndBlock();
+				_attackAnimationHandler.EndBlock();
+			}
+
 		}
 	}
 }

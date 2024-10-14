@@ -10,7 +10,7 @@ namespace FPSMeleeDemo.Data
 		private GameObject _graphics;
 		public GameObject Graphics => _graphics;
 
-		public abstract PlayableAsset GetMontage(CardinalDirection direction);
+		public abstract PlayableAsset GetMontage(CardinalDirection direction, bool reversed = false);
 	}
 }
 

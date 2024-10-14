@@ -11,6 +11,7 @@ namespace FPSMeleeDemo.FPS
 	public interface IAttacker
 	{
 		public void Attack(Vector2 direction);
+		public void SetBlockState(bool value);
 	}
 }
 
