@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: AttackerFXFactory
   m_EditorClassIdentifier: 
   _particleSet: {fileID: 11400000, guid: e4e86171b44aacf7b97fc183fe970d9b, type: 2}
+  _decalSet: {fileID: 11400000, guid: 1e0ace5cacd27002990f3e79ad614e35, type: 2}
