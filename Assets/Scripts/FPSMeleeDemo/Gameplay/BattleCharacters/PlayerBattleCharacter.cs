@@ -62,7 +62,7 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 			_inputFeeder.GameInput.Player.Block.performed += OnBlockPerformed;
 			_inputFeeder.GameInput.Player.Block.canceled += OnBlockCanceled;
 
-			_inputFeeder.SetCursor(false);
+			_inputFeeder.SetCursorState(false);
 		}
 
 		private void OnDisable()
@@ -75,7 +75,7 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 			_inputFeeder.GameInput.Player.Block.performed -= OnBlockPerformed;
 			_inputFeeder.GameInput.Player.Block.canceled -= OnBlockCanceled;
 
-			_inputFeeder.SetCursor(true);
+			_inputFeeder.SetCursorState(true);
 		}
 
 

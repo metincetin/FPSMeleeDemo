@@ -8,6 +8,27 @@ Cursor {
     align-items: center;
 }
 
+.background{
+    background-color: black;
+}
+.rounded{
+	border-radius:4px;
+}
+
+.background Label{
+    color: white;
+}
+
+.background Label.header{
+	-unity-font-weight:bold;
+	font-size:32px;
+}
+
+Label.description{
+	-unity-font-style:italic;
+	color:#BABABA;
+}
+
 .damage-text {
     color: red;
     -unity-font-style: bold;
@@ -46,4 +67,8 @@ Cursor #mid {
     height: 6px;
     background-color: rgb(255, 255, 255);
     border-radius: 100%;
+}
+
+.hidden{
+	opacity:0;
 }

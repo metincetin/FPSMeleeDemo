@@ -24,7 +24,7 @@ namespace FPSMeleeDemo.Movement.Tests
 		{
 			_inputFeeder.Enable();
 
-			_inputFeeder.SetCursor(false);
+			_inputFeeder.SetCursorState(false);
 
 			_inputFeeder.GameInput.Player.Jump.performed += OnJumpPressed;
 		}

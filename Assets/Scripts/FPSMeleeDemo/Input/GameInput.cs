@@ -196,6 +196,54 @@ namespace FPSMeleeDemo.Input
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""56e7c813-91f3-4e07-8ba9-ea64bf1b0cbb"",
+            ""actions"": [
+                {
+                    ""name"": ""ShowCursor"",
+                    ""type"": ""Button"",
+                    ""id"": ""bcd4ca49-6724-408e-8aa7-4694e883e821"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleSettings"",
+                    ""type"": ""Button"",
+                    ""id"": ""fca860aa-e74e-4b75-87e6-260afbb41e16"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""ac816282-5414-4d33-8916-60c56dca9c4f"",
+                    ""path"": ""<Keyboard>/leftAlt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""ShowCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72988ae4-4087-4cd8-8b4d-c7fe3ef01c3f"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""ToggleSettings"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -225,6 +273,10 @@ namespace FPSMeleeDemo.Input
             m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
             m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
             m_Player_Block = m_Player.FindAction("Block", throwIfNotFound: true);
+            // UI
+            m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+            m_UI_ShowCursor = m_UI.FindAction("ShowCursor", throwIfNotFound: true);
+            m_UI_ToggleSettings = m_UI.FindAction("ToggleSettings", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -368,6 +420,60 @@ namespace FPSMeleeDemo.Input
             }
         }
         public PlayerActions @Player => new PlayerActions(this);
+
+        // UI
+        private readonly InputActionMap m_UI;
+        private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+        private readonly InputAction m_UI_ShowCursor;
+        private readonly InputAction m_UI_ToggleSettings;
+        public struct UIActions
+        {
+            private @GameInput m_Wrapper;
+            public UIActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+            public InputAction @ShowCursor => m_Wrapper.m_UI_ShowCursor;
+            public InputAction @ToggleSettings => m_Wrapper.m_UI_ToggleSettings;
+            public InputActionMap Get() { return m_Wrapper.m_UI; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+            public void AddCallbacks(IUIActions instance)
+            {
+                if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+                @ShowCursor.started += instance.OnShowCursor;
+                @ShowCursor.performed += instance.OnShowCursor;
+                @ShowCursor.canceled += instance.OnShowCursor;
+                @ToggleSettings.started += instance.OnToggleSettings;
+                @ToggleSettings.performed += instance.OnToggleSettings;
+                @ToggleSettings.canceled += instance.OnToggleSettings;
+            }
+
+            private void UnregisterCallbacks(IUIActions instance)
+            {
+                @ShowCursor.started -= instance.OnShowCursor;
+                @ShowCursor.performed -= instance.OnShowCursor;
+                @ShowCursor.canceled -= instance.OnShowCursor;
+                @ToggleSettings.started -= instance.OnToggleSettings;
+                @ToggleSettings.performed -= instance.OnToggleSettings;
+                @ToggleSettings.canceled -= instance.OnToggleSettings;
+            }
+
+            public void RemoveCallbacks(IUIActions instance)
+            {
+                if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(IUIActions instance)
+            {
+                foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public UIActions @UI => new UIActions(this);
         private int m_KeyboardMouseSchemeIndex = -1;
         public InputControlScheme KeyboardMouseScheme
         {
@@ -385,6 +491,11 @@ namespace FPSMeleeDemo.Input
             void OnAttack(InputAction.CallbackContext context);
             void OnDash(InputAction.CallbackContext context);
             void OnBlock(InputAction.CallbackContext context);
+        }
+        public interface IUIActions
+        {
+            void OnShowCursor(InputAction.CallbackContext context);
+            void OnToggleSettings(InputAction.CallbackContext context);
         }
     }
 }

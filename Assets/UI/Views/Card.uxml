@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/StyleSheets/DefaultStyle.uss?fileID=7433441132597879392&amp;guid=50cee21c471236f5d84ebeeef02f0244&amp;type=3#DefaultStyle" />
+    <Style src="project://database/Assets/UI/StyleSheets/Vfuy.uss?fileID=7433441132597879392&amp;guid=9ae08472d18793b0aa01bbcf700e52b9&amp;type=3#Vfuy" />
+    <ui:VisualElement class="background rounded" style="flex-grow: 1;">
+        <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art/Textures/KenneyParticlePack/PNG%20(Transparent)/flame_06.png?fileID=2800000&amp;guid=332d3e752e6261f15bd78e0fb7387e8c&amp;type=3#flame_06&quot;);" />
+    </ui:VisualElement>
+</ui:UXML>
