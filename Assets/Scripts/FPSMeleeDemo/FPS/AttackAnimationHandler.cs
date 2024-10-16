@@ -21,6 +21,8 @@ namespace FPSMeleeDemo.FPS
 
 		private readonly int IsBlockingHash = Animator.StringToHash("IsBlocking");
 
+		public bool IsAttacking { get; private set; }
+
 		public AttackAnimationHandler(MontagePlayer montagePlayer)
 		{
 			this._montagePlayer = montagePlayer;
@@ -30,9 +32,24 @@ namespace FPSMeleeDemo.FPS
 
 		public void Play(CardinalDirection direction)
 		{
+			if (IsAttacking) return;
+			IsAttacking = true;
 			_attackDirection = direction;
-			_montagePlayer.PlayMontage(Weapon.GetMontage(direction));
+			var handle = _montagePlayer.PlayMontageAndWaitEvent(Weapon.GetMontage(direction), OnMontageEvent);
+			handle.Ended += OnMontageEnded;
 		}
+
+
+		// once montage ends, make sure to reset IsAttacking anyways, in case someone forgets to add the event..
+        private void OnMontageEnded()
+        {
+			IsAttacking = false;
+        }
+
+        private void OnMontageEvent(MontagePlayer.MontageEvent @event)
+        {
+			IsAttacking = false;
+        }
 
 		public void OnAttackHitReceived(DamageArea.DamageHitInfo info)
 		{

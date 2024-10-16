@@ -129,7 +129,7 @@ namespace FPSMeleeDemo.FPS
 					{
 						var bouncePower = Vector3.Dot(-hit.normal, relativeVel);
 						Debug.DrawRay(hit.point, -hit.normal * bouncePower, Color.yellow, 5);
-						hit.rigidbody.AddForceAtPosition(-hit.normal * bouncePower, hit.point, ForceMode.Impulse);
+						hit.rigidbody.AddForceAtPosition(-hit.normal * bouncePower * 360, hit.point, ForceMode.Impulse);
 					}
 
 					_hits.Add(hit.collider);

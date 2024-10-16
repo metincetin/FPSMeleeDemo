@@ -50,7 +50,7 @@ MonoBehaviour:
     m_Duration: 1.6833333333333333
     m_TimeScale: 1
     m_ParentTrack: {fileID: -2474383707522796920}
-    m_EaseInDuration: 0
+    m_EaseInDuration: 0.1
     m_EaseOutDuration: 0.2
     m_BlendInDuration: -1
     m_BlendOutDuration: -1
@@ -132,6 +132,19 @@ MonoBehaviour:
   m_OpenClipOffsetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_ApplyOffsets: 0
+--- !u!114 &-1308570539642446693
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d925be9e6abc292399c2e6ee50f4cae, type: 3}
+  m_Name: Attack Ready Montage Event
+  m_EditorClassIdentifier: 
+  m_Time: 0.65
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,7 +166,7 @@ MonoBehaviour:
     m_Framerate: 60
     m_ScenePreview: 1
   m_DurationMode: 0
-  m_MarkerTrack: {fileID: 0}
+  m_MarkerTrack: {fileID: 9112222333009707503}
 --- !u!114 &593176403068109883
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -191,7 +204,7 @@ MonoBehaviour:
     m_Start: 0.2
     m_ClipIn: 0
     m_Asset: {fileID: 593176403068109883}
-    m_Duration: 0.6000000000000001
+    m_Duration: 0.38333333333333336
     m_TimeScale: 1
     m_ParentTrack: {fileID: 7669453717346147024}
     m_EaseInDuration: 0
@@ -258,3 +271,27 @@ MonoBehaviour:
     m_DisplayName: DamageActivatorPlayableAsset
   m_Markers:
     m_Objects: []
+--- !u!114 &9112222333009707503
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a16748d9461eae46a725db9776d5390, type: 3}
+  m_Name: Markers
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips: []
+  m_Markers:
+    m_Objects:
+    - {fileID: -1308570539642446693}

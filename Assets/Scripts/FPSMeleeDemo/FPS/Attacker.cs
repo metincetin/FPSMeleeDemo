@@ -11,7 +11,7 @@ using UnityEngine;
 namespace FPSMeleeDemo.FPS
 {
 
-	public class Attacker : MonoBehaviour, IAttacker, IWeaponInstanceContainer, IDamageCauser
+    public class Attacker : MonoBehaviour, IAttacker, IWeaponInstanceContainer, IDamageCauser
 	{
 		[SerializeField]
 		private Weapon _weapon;
@@ -35,6 +35,7 @@ namespace FPSMeleeDemo.FPS
 		private IDamageCauser _damageCauser;
 
 		public event Action<IDamageReceiver, DamageObject> DamageCaused;
+
 
 		private void Awake()
 		{
@@ -104,6 +105,7 @@ namespace FPSMeleeDemo.FPS
 
 		public void Attack(Vector2 direction)
 		{
+			if (_attackAnimationHandler.IsAttacking) return;
 			_attackAnimationHandler.Weapon = _weapon;
 			_attackAnimationHandler.Play(direction.ToCardinal());
 		}

@@ -95,7 +95,10 @@ namespace FPSMeleeDemo.Movement
 
 		private bool _jumpRequested;
 
-		private void Update()
+		[SerializeField]
+        private float _dashPower = 60;
+
+        private void Update()
 		{
 			Move();
 		}
@@ -158,7 +161,7 @@ namespace FPSMeleeDemo.Movement
 			{
 				VelocityOffset.AddOffsetData(new OffsetData
 				{
-					Value = direction * 100,
+					Value = direction * _dashPower,
 					FadeDuration = 0.3f,
 					Ease = Ease.OutExpo
 				});
