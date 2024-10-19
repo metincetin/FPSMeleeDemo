@@ -137,6 +137,8 @@ namespace FPSMeleeDemo.Movement
 			velocity += VelocityOffset.Get() * Time.deltaTime;
 
 			_characterController.Move(velocity);
+
+			MovementInput = Vector2.zero;
 		}
 
 		private Vector3 GetTotalManipulatorVelocity()
