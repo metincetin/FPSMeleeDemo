@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FPSMeleeDemo.AI
+namespace FPSMeleeDemo.Randomization
 {
 	public class TimedRandomizedValue: RandomizedValue
 	{

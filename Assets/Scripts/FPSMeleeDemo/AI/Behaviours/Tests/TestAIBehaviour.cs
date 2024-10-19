@@ -1,7 +1,7 @@
 using FPSMeleeDemo.AI.BT;
 using UnityEngine;
 
-namespace FPSMeleeDemo.AI
+namespace FPSMeleeDemo.AI.Behaviours.Tests
 {
     [CreateAssetMenu(menuName = "FPS/AI/Behaviours/Test")]
 	public class TestAIBehaviour: AIBehaviour

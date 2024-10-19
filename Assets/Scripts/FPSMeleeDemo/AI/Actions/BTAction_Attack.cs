@@ -2,7 +2,7 @@ using FPSMeleeDemo.AI.BT;
 using FPSMeleeDemo.FPS;
 using UnityEngine;
 
-namespace FPSMeleeDemo.AI
+namespace FPSMeleeDemo.AI.Actions
 {
     public class BTAction_Attack : BTAction
     {
