@@ -50,7 +50,6 @@ namespace FPSMeleeDemo.Montage.Playables
 #if UNITY_EDITOR
 			if (!Application.isPlaying) return;
 #endif
-			Debug.Log(Attacker);
 			if (Attacker is IWeaponInstanceContainer container)
 			{
 				var damageArea = container.WeaponInstance.GetComponentInChildren<DamageArea>();
