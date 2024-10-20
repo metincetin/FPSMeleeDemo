@@ -6,6 +6,7 @@ using FPSMeleeDemo.Data;
 using FPSMeleeDemo.FX;
 using FPSMeleeDemo.Gameplay;
 using FPSMeleeDemo.Montage;
+using FPSMeleeDemo.Rigging;
 using UnityEngine;
 
 namespace FPSMeleeDemo.FPS
@@ -96,15 +97,32 @@ namespace FPSMeleeDemo.FPS
 				damageArea.End();
 			}
 
-			if (info.Collider.TryGetComponent<IDamageReceiver>(out var damageReceiver))
+			IDamageReceiver targetReceiver = null;
+
+			var bodyPart = info.Collider.GetComponent<BodyPart>();
+
+
+			var damage = DamageBuilder.Create(5)
+				.SetCauser(_damageCauser)
+				.SetDamagePosition(info.Point);
+
+			if (bodyPart)
 			{
-				var damage = DamageBuilder.Create(5)
-					.SetCauser(_damageCauser)
-					.SetDamagePosition(info.Point)
-					.Build();
-				damageReceiver.ApplyDamage(damage);
-				DamageCaused?.Invoke(damageReceiver, damage);
+				targetReceiver = bodyPart.BoundDamageReceiver;
+				damage.MultiplyDamage(bodyPart.DamageMultiplier);
 			}
+			else
+			{
+				targetReceiver = info.Collider.GetComponent<IDamageReceiver>();
+			}
+
+			if (targetReceiver == null) return;
+
+			var damageInstance = damage.Build();
+
+			targetReceiver.ApplyDamage(damageInstance);
+
+			DamageCaused?.Invoke(targetReceiver, damageInstance);
 		}
 
 		public void Attack(Vector2 direction)
@@ -113,6 +131,10 @@ namespace FPSMeleeDemo.FPS
 			AnimationHandler.Weapon = _weapon;
 			AnimationHandler.Play(direction.ToCardinal());
 
+		}
+
+		private void Update()
+		{
 			_blockHandler.AddBlockPower(_blockPowerPerSecond * Time.deltaTime);
 		}
 

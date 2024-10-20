@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace FPSMeleeDemo.Gameplay
 {
-    public class DamageBuilder
+	public class DamageBuilder
 	{
 		private IDamageCauser _causer;
 		private float _damage;
@@ -25,10 +25,16 @@ namespace FPSMeleeDemo.Gameplay
 			this._damage = value;
 			return this;
 		}
+		public DamageBuilder MultiplyDamage(float value)
+		{
+			this._damage *= value;
+			return this;
+		}
 
 		public DamageBuilder SetCritical(bool value)
 		{
 			this._isCritical = value;
+			this._damage *= 2;
 			return this;
 		}
 

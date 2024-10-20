@@ -38,7 +38,6 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 
         public void ApplyDamage(DamageObject damage)
 		{
-
 			var blockHandler = _attacker.BlockHandler;
 
 			if (blockHandler.IsBlocking)
