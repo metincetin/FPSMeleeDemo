@@ -4,7 +4,7 @@ using FPSMeleeDemo.Gameplay.BattleCharacters;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace FPSMeleeDemo.UI
+namespace FPSMeleeDemo.UI.Tests
 {
     public class DamageTextController : MonoBehaviour
 	{

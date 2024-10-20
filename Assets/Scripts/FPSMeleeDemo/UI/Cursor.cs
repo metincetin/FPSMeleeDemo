@@ -1,80 +1,171 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
+using FPSMeleeDemo.Core;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace FPSMeleeDemo.UI
 {
-
-	public class Cursor : VisualElement
+	public struct CursorDamageEvent : IEvent
 	{
-		public new class UxmlFactory : UxmlFactory<Cursor, UxmlTraits> { }
+	}
 
-		private VisualElement _lines;
+	public class CursorAnimationHandler
+	{
+		private const float _damageAnimationDuration = 0.2f;
 
-		private const float DefaultLineDistance = 24;
-		private const float LineDissappearingDistance = 32;
+		private CanvasGroup _lineContainerCanvasGroup;
+        private readonly CanvasGroup _blockCanvasGroup;
+        private CanvasGroup _deflectCanvasGroup;
 
-		public Cursor()
+        private Sequence _damageTween;
+		private Tween _blockTween;
+        private Tween _deflectTween;
+
+		private Transform _lineContainer;
+
+		public float LineRadius { get; set; }
+
+		public CursorAnimationHandler(CanvasGroup lineContainerCanvasGroup, CanvasGroup blockCanvasGroup, CanvasGroup deflectCanvasGroup, Transform lineContainer)
 		{
-			Add(new VisualElement { name = "mid" });
-			var lines = new VisualElement { name = "lines" };
-			_lines = lines;
+			_blockCanvasGroup = blockCanvasGroup;
+			_lineContainerCanvasGroup = lineContainerCanvasGroup;
+			_deflectCanvasGroup = deflectCanvasGroup;
 
-			Add(lines);
+			_lineContainer = lineContainer;
+		}
 
 
-			for (int i = 0; i < 4; i++)
+		public void Cleanup()
+		{
+			_damageTween?.Kill(true);
+		}
+
+		private Tween CreateDamagePositioningTween(bool invert = false)
+		{
+			const float StartDistance = 8f;
+			var tween = DOTween.Sequence();
+			for (int i = 0; i < _lineContainer.childCount; i++)
 			{
-				var line = new VisualElement();
-				line.AddToClassList($"line");
+				var t = _lineContainer.GetChild(i);
+				
+				var fromPos = Cursor.CalculateTransform(i, _lineContainer.childCount, LineRadius + StartDistance);
+				var toPos = Cursor.CalculateTransform(i, _lineContainer.childCount, LineRadius);
 
-				SetLineDistance(line, i, LineDissappearingDistance);
+				if (invert)
+					tween.Join(t.DOLocalMove(fromPos.position, _damageAnimationDuration).From(toPos.position));
+				else
+					tween.Join(t.DOLocalMove(toPos.position, _damageAnimationDuration).From(fromPos.position));
+			}
 
-				lines.Add(line);
+			return tween;
+		}
+		
+		public void PlayDamage()
+		{
+			_damageTween?.Kill(true);
+
+			_damageTween = DOTween.Sequence();
+
+			_lineContainerCanvasGroup.alpha = 1;
+			_damageTween
+				.Join(CreateDamagePositioningTween().SetEase(Ease.OutBack))
+				.AppendInterval(.4f)
+				.Append(_lineContainerCanvasGroup.DOFade(0f, _damageAnimationDuration))
+				.Join(CreateDamagePositioningTween(true).SetEase(Ease.InOutSine));
+		}
+
+
+		public void PlayBlock()
+		{
+			_blockTween?.Kill(true);
+
+
+			_blockCanvasGroup.alpha = 1;
+
+			_blockTween = _blockCanvasGroup.DOFade(0f, _damageAnimationDuration).SetDelay(.8f);
+		}
+
+		public void PlayDeflect()
+		{
+			_deflectTween?.Kill(true);
+
+
+			_deflectCanvasGroup.alpha = 1;
+
+			_deflectTween = _deflectCanvasGroup.DOFade(0f, _damageAnimationDuration).SetDelay(.8f);
+		}
+	}
+
+	public class Cursor : MonoBehaviour
+	{
+		[SerializeField] private float _radius;
+		[SerializeField] private Transform _lineContainer;
+		private CanvasGroup _lineContainerCanvasGroup;
+		
+		private CursorAnimationHandler _animationHandler;
+		
+		[SerializeField] private CanvasGroup _deflectCanvasGroup;
+
+		[SerializeField] private CursorBlockView _blockView;
+		public CursorBlockView BlockView
+		{
+			get => _blockView;
+			set => _blockView = value;
+		}
+
+		private void Awake()
+		{
+			_lineContainerCanvasGroup = _lineContainer.GetComponent<CanvasGroup>();
+
+			_animationHandler = new CursorAnimationHandler(_lineContainerCanvasGroup, _blockView.GetComponent<CanvasGroup>(), _deflectCanvasGroup, _lineContainer);
+			_animationHandler.LineRadius = _radius;
+
+			_lineContainerCanvasGroup.alpha = 0;
+		}
+
+		private void UpdateLinePositions()
+		{
+			if (!_lineContainer) return;
+			var childCount = _lineContainer.childCount;
+			for (int i = 0; i < childCount; i++)
+			{
+				var line = _lineContainer.GetChild(i);
+
+				var tr = CalculateTransform(i, childCount, _radius);
+				line.transform.localEulerAngles = new Vector3(0, 0, tr.angle);
+				line.transform.localPosition = tr.position;
 			}
 		}
 
 		public void ShowDamage()
 		{
-			var i = 0;
-			foreach (var l in _lines.hierarchy.Children())
-			{
-				l.EnableInClassList("visible", true);
-
-				SetLineDistance(l, i, DefaultLineDistance);
-
-				i++;
-			}
 		}
 
-		private void SetLineDistance(VisualElement line, int index, float distance)
+		private void OnValidate()
 		{
-			float angle = (360 / 4f) * index + (360 / 4f / 2f);
+			UpdateLinePositions();
+		}
+
+		public static (Vector3 position, float angle) CalculateTransform(int index, int maxIndex, float radius)
+		{
+			float angle = (360f / maxIndex) * index + (360f / maxIndex * 0.5f);
 
 			float angleRad = Mathf.Deg2Rad * angle;
 
 
 			var dir = new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
 
-			line.style.transformOrigin = new StyleTransformOrigin(new TransformOrigin(dir.x, dir.y));
-			line.style.rotate = new StyleRotate(new Rotate(angle));
-			line.style.translate = new StyleTranslate(new Translate(dir.x * distance, dir.y * distance));
-
+			return (new Vector3(dir.x * radius, dir.y * radius), angle);
 		}
 
-		public void HideDamage()
+		public void ShowBlock()
 		{
-			var i = 0;
-			foreach (var l in _lines.hierarchy.Children())
-			{
-				l.EnableInClassList("visible", false);
-
-				SetLineDistance(l, i, LineDissappearingDistance);
-
-				i++;
-			}
+			_animationHandler.PlayBlock();
 		}
-	}
+
+        public void ShowDeflect()
+        {
+			_animationHandler.PlayDeflect();
+        }
+    }
 }

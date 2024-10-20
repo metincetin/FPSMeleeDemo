@@ -1,12 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using FPSMeleeDemo.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
-namespace FPSMeleeDemo.UI
+namespace FPSMeleeDemo.UI.Tests
 {
 	public class SettingContainer : MonoBehaviour
 	{

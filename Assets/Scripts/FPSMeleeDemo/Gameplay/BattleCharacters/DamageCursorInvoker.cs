@@ -1,6 +1,6 @@
 using FPSMeleeDemo.Core;
+using FPSMeleeDemo.UI;
 using UnityEngine;
-using static FPSMeleeDemo.UI.Tests.CursorTest;
 
 namespace FPSMeleeDemo.Gameplay.BattleCharacters
 {
