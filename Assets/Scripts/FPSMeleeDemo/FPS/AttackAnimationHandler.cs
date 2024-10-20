@@ -12,7 +12,6 @@ namespace FPSMeleeDemo.FPS
 	{
 		private MontagePlayer _montagePlayer;
 		private Animator _animator;
-		private IKHandler _ikHandler;
 		private Coroutine _bounceCoroutine;
 
 		public Weapon Weapon { get; set; }
@@ -27,7 +26,6 @@ namespace FPSMeleeDemo.FPS
 		{
 			this._montagePlayer = montagePlayer;
 			this._animator = montagePlayer.GetComponentInChildren<Animator>();
-			this._ikHandler = _animator.gameObject.AddComponent<IKHandler>();
 		}
 
 		public void Play(CardinalDirection direction)
