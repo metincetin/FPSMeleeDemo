@@ -16,12 +16,14 @@ namespace FPSMeleeDemo.AI.BT
 
 		public void Begin()
 		{
+			_index = 0;
 			Current.Enter();
 		}
 
 		public BTNode Current => _nodes[_index];
 
 		public bool HasNext => _index < _nodes.Length - 1;
+		public int Length => _nodes.Length;
 
 		public void Restart()
 		{
@@ -46,6 +48,11 @@ namespace FPSMeleeDemo.AI.BT
 		public void End()
 		{
 			Current.Exit();
+		}
+		
+		public void SetIndex(int value)
+		{
+			_index = value;
 		}
 
 		public IEnumerable<BTNode> Iterate()

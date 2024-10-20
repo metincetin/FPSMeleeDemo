@@ -7,7 +7,7 @@ namespace FPSMeleeDemo.AI.Decorators
 	{
 		private readonly RandomizedValue _shouldDefendValue;
 		private readonly float _requiredChanceForDefence;
-
+		
 		public BTDecorator_ShouldDefend(float requiredChanceForDefence)
 		{
 			var randomizedValue = new RandomizedValueWeighted();

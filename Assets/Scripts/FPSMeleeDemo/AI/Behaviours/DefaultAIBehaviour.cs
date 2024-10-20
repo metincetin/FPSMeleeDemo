@@ -27,24 +27,24 @@ namespace FPSMeleeDemo.AI.Behaviours
 				new BTLog { Message = "BT Start" },
 				new BTWait { Duration = 2 },
 				new BTParallel(
-					new BTSequence(new BTNode[]
-					{
-						new BTAction_ApproachPlayer
-							{ Target = otherTransform, Movement = movement, Transform = Owner.transform },
-						new BTAction_CircleAround
-							{ Target = otherTransform, Movement = movement, Transform = Owner.transform },
-					}),
-					new BTSelector(
-						new BTAction_Defend(Owner.gameObject, attacker),
-						new BTAction_Attack
-						{
-							Decorators = new[]
+					new BTSequence(
+						new BTAction_ApproachPlayer { Target = otherTransform, Movement = movement, Transform = Owner.transform },
+						new BTAction_CircleAround { Target = otherTransform, Movement = movement, Transform = Owner.transform }),
+					new BTRepeater(
+						new BTSelector(
+							new BTSequence_Defend(Owner.gameObject, otherTransform.GetComponent<IAttacker>()),
+							new BTAction_Attack
 							{
-								new BTDecorator_DistanceCheck { RequiredDistance = 2, Target = otherTransform, Transform = Owner.transform }
-							},
-							Attacker = attacker,
-							Target = otherTransform
-						}
+								Decorators = new BTDecorator[]
+								{
+									new BTDecorator_DistanceCheck
+										{ RequiredDistance = 2, Target = otherTransform, Transform = Owner.transform },
+									new BTDecorator_Timer(2)
+								},
+								Attacker = attacker,
+								Target = otherTransform
+							}
+						)
 					)
 				)
 			);

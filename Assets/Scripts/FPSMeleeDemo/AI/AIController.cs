@@ -37,7 +37,6 @@ namespace FPSMeleeDemo.AI
 
 		private void InitializeBehaviour()
 		{
-			Debug.Log(BattleInstance);
 			_aiBehaviour.Assign(this);
 			_aiBehaviour.BattleInstance = BattleInstance;
 			_aiBehaviour.Begin();

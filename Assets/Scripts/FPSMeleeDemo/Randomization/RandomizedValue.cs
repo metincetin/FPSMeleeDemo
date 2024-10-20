@@ -7,7 +7,7 @@ namespace FPSMeleeDemo.Randomization
 		
 		public T Select<T>(params T[] values)
 		{
-			int v = (int)InRange(0, values.Length - 1);
+			int v = Mathf.RoundToInt(InRange(0, values.Length - 1));
 			return values[v];
 		}
 		

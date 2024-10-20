@@ -12,6 +12,7 @@ namespace FPSMeleeDemo.AI.BT
 			if (result == NodeStatus.Fail)
 			{
 				Traverse();
+				return NodeStatus.Running;
 			}
 
 			return result;

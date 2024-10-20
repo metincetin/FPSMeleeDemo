@@ -1,4 +1,5 @@
 using FPSMeleeDemo.AI.BT;
+using FPSMeleeDemo.AI.Decorators;
 using FPSMeleeDemo.Data;
 using FPSMeleeDemo.FPS;
 using UnityEngine;
@@ -9,6 +10,10 @@ namespace FPSMeleeDemo.AI.Actions
     {
         private float _lastAttack;
         public float AttackRate = 1.4f;
+        
+        public BTAction_Attack()
+        {
+        }
 
         protected override NodeStatus OnRun()
         {

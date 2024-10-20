@@ -7,7 +7,8 @@ namespace FPSMeleeDemo.AI.BT
 		{
 			foreach (BTNode node in _traverser.Iterate())
 			{
-				node.Run();
+				var childResult = node.Run();
+				//if (childResult == NodeStatus.Fail) Restart();
 			}
 			return NodeStatus.Running;
 		}

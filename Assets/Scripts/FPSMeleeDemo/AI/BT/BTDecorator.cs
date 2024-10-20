@@ -5,8 +5,16 @@ namespace FPSMeleeDemo.AI.BT
 		public virtual void OnNodeEntered(){}
 		public virtual void OnNodeExited(){}
 			
-		public bool Invert { get; }
+		public bool Invert { get; set; }
+		public bool Enabled { get; set; } = true;
 		protected abstract bool ShouldRun { get; }
-		public bool Test => Invert ? !ShouldRun : ShouldRun;
+		public bool Test 
+		{
+			get
+			{
+				if (Enabled) return Invert ? !ShouldRun : ShouldRun;
+				return true;
+			}
+		} 
 	}
 }
