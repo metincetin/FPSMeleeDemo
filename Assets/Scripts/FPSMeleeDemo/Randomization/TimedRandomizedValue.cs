@@ -25,12 +25,6 @@ namespace FPSMeleeDemo.Randomization
 
 			return _randomValue;
 		}
-		
-		public float InRange(float min, float max)
-		{
-			float t = Get();
 
-			return Mathf.Lerp(min, max, t);
-		}
 	}
 }
