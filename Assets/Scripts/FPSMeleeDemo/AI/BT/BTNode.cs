@@ -4,8 +4,26 @@ namespace FPSMeleeDemo.AI.BT
 	{
 		public BTDecorator[] Decorators { get; set; }
 
-		public virtual void Enter() { }
-		public virtual void Exit() { }
+		public void Enter() 
+		{
+			foreach(var d in Decorators)
+			{
+				d.OnNodeEntered();
+			}
+			
+			OnEntered();
+		}
+		protected virtual void OnEntered(){}
+		public void Exit() 
+		{
+			foreach(var d in Decorators)
+			{
+				d.OnNodeExited();
+			}
+			
+			OnExited();
+		}
+		protected virtual void OnExited(){}
 		
 		public BTNode(params BTDecorator[] decorators)
 		{

@@ -9,7 +9,7 @@ namespace FPSMeleeDemo.AI.BT
 			_traverser = new NodeTraverser(nodes);
 		}
 
-		public override void Enter()
+		protected override void OnEntered()
 		{
 			_traverser.Begin();
 		}

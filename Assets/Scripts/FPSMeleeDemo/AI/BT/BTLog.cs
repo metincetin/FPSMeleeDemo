@@ -6,12 +6,12 @@ namespace FPSMeleeDemo.AI.BT
 	{
 		public string Message = "Hello, world";
 
-		public override void Enter()
+		protected override void OnEntered()
 		{
 			Debug.Log("BTLog Enter");
 		}
 
-		public override void Exit()
+		protected override void OnExited()
 		{
 			Debug.Log("BTLog Exit");
 		}

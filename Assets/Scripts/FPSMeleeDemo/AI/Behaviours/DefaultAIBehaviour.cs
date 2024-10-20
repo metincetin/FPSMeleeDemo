@@ -34,14 +34,18 @@ namespace FPSMeleeDemo.AI.Behaviours
 						new BTAction_CircleAround
 							{ Target = otherTransform, Movement = movement, Transform = Owner.transform },
 					}),
-					new BTAction_Attack
-					{
-						Decorators = new[]
+					new BTSelector(
+						new BTAction_Defend(Owner.gameObject, attacker),
+						new BTAction_Attack
 						{
-							new BTDecorator_DistanceCheck { RequiredDistance = 2, Target = otherTransform, Transform = Owner.transform }
-						},
-						Attacker = attacker, Target = otherTransform
-					}
+							Decorators = new[]
+							{
+								new BTDecorator_DistanceCheck { RequiredDistance = 2, Target = otherTransform, Transform = Owner.transform }
+							},
+							Attacker = attacker,
+							Target = otherTransform
+						}
+					)
 				)
 			);
 

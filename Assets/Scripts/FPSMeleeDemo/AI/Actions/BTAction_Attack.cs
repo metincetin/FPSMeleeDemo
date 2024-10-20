@@ -1,4 +1,5 @@
 using FPSMeleeDemo.AI.BT;
+using FPSMeleeDemo.Data;
 using FPSMeleeDemo.FPS;
 using UnityEngine;
 
@@ -14,8 +15,10 @@ namespace FPSMeleeDemo.AI.Actions
             if (Time.time - _lastAttack < AttackRate) return NodeStatus.Running;
             
             _lastAttack = Time.time;
+
+            var randomDirection= CardinalDirectionExtensions.ToVector((CardinalDirection)Random.Range(0, 4));
             
-            Attacker.Attack(Vector2.right);
+            Attacker.Attack(randomDirection);
             
 			return NodeStatus.Running;
         }

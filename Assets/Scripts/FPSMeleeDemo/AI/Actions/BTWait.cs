@@ -7,7 +7,7 @@ namespace FPSMeleeDemo.AI.BT
 		public float Duration;
 		private float _startTime;
 
-		public override void Enter()
+		protected override void OnEntered()
 		{
 			_startTime = Time.time;
 		}

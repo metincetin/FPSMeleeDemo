@@ -9,7 +9,7 @@ namespace FPSMeleeDemo.AI.Decorators
 
 		private float _startTime;
 
-		public override void Enter()
+		protected override void OnEntered()
 		{
 			_startTime = Time.time;
 		}
