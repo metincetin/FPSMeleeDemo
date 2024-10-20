@@ -10,7 +10,6 @@ namespace FPSMeleeDemo.FPS
 
         public override void Notify(GameObject gameObject, MontagePlayer montagePlayer)
         {
-			Debug.Log("Notify");
 			montagePlayer.InvokeEvent(this, null);
         }
     }

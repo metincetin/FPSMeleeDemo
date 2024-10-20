@@ -28,7 +28,6 @@ namespace FPSMeleeDemo.BattleSystem
 		{
 			foreach(var c in _characters)
 			{
-				Debug.Log(c);
 				var objects = (c as MonoBehaviour).GetComponentsInChildren<IBattleObject>();
 				foreach(var o in objects)
 				{

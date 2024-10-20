@@ -43,7 +43,6 @@ namespace FPSMeleeDemo.FPS
 
 		public void Begin()
 		{
-			Debug.Log("Begin");
 			_awaitingDamaging = true;
 			ResetPreviousPositions();
 			_hits.Clear();
@@ -112,9 +111,6 @@ namespace FPSMeleeDemo.FPS
 
 					Vector3 effectiveVel = vel;// * effectiveSpeed;
 					Vector3 relativeVel = effectiveVel - negativeVel;
-
-
-					Debug.Log($"Hit! Velocity: {relativeVel}. Speed: {relativeVel.magnitude}, hitTarget = {hit.collider.gameObject}");
 
 					HitReceived?.Invoke(new DamageHitInfo
 					{
