@@ -10,8 +10,13 @@ using UnityEngine;
 
 namespace FPSMeleeDemo.FPS
 {
-
-    public class Attacker : MonoBehaviour, IAttacker, IWeaponInstanceContainer, IDamageCauser
+	
+	public interface IAttackStateProvider
+	{
+		public bool IsAttacking { get; }
+	}
+	
+    public class Attacker : MonoBehaviour, IAttacker, IWeaponInstanceContainer, IDamageCauser, IAttackStateProvider
 	{
 		[SerializeField]
 		private Weapon _weapon;
@@ -28,13 +33,19 @@ namespace FPSMeleeDemo.FPS
 		private IAttackerFXFactory _fxFactory;
 
 		private BlockHandler _blockHandler;
+		public BlockHandler BlockHandler => _blockHandler;
 
-		[SerializeField]
+        bool IAttackStateProvider.IsAttacking => _attackAnimationHandler.IsAttacking;
+
+        [SerializeField]
 		private Transform _weaponPoint;
 
 		private IDamageCauser _damageCauser;
 
 		public event Action<IDamageReceiver, DamageObject> DamageCaused;
+
+		[SerializeField]
+		private float _blockPowerPerSecond = 5;
 
 
 		private void Awake()
@@ -108,6 +119,8 @@ namespace FPSMeleeDemo.FPS
 			if (_attackAnimationHandler.IsAttacking) return;
 			_attackAnimationHandler.Weapon = _weapon;
 			_attackAnimationHandler.Play(direction.ToCardinal());
+
+			_blockHandler.AddBlockPower(_blockPowerPerSecond * Time.deltaTime);
 		}
 
 		public void SetBlockState(bool value)

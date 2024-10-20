@@ -4,21 +4,31 @@ using UnityEngine;
 
 namespace FPSMeleeDemo.FPS
 {
+
     public class BlockHandler
 	{
 		public float BlockStartTime { get; private set; }
 		public bool IsBlocking { get; private set; }
 
 		private float _blockPower = MaxBlockPower;
-		private const float MaxBlockPower = 5;
+		private const float MaxBlockPower = 35;
+
+		public float RemainingBlockRate => _blockPower / MaxBlockPower;
 
 		public event Action<bool> BlockStateChanged;
+
+		public void AddBlockPower(float power)
+		{
+			_blockPower = Mathf.Min(MaxBlockPower, _blockPower + power);
+		}
 
 		public void BeginBlock()
 		{
 			if (IsBlocking) return;
 			IsBlocking = true;
 			_blockPower = MaxBlockPower;
+
+			BlockStartTime = Time.time;
 
 			BlockStateChanged?.Invoke(true);
 		}
@@ -31,7 +41,7 @@ namespace FPSMeleeDemo.FPS
 
 		public void DepleteDamage(DamageObject damage)
 		{
-			var diff = damage.Damage - _blockPower;
+			var diff =  _blockPower - damage.Damage;
 
 			if (diff > 0)
 			{

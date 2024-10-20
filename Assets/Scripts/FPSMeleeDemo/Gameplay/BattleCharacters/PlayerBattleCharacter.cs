@@ -1,8 +1,10 @@
 using System;
+using FPSMeleeDemo.Core;
 using FPSMeleeDemo.Data;
 using FPSMeleeDemo.FPS;
 using FPSMeleeDemo.Input;
 using FPSMeleeDemo.Movement;
+using FPSMeleeDemo.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,6 +35,27 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 
 		public void ApplyDamage(DamageObject damage)
 		{
+
+			var blockHandler = _attacker.BlockHandler;
+
+			if (blockHandler.IsBlocking)
+			{
+				float deflectTime = Time.time - blockHandler.BlockStartTime;
+				if (deflectTime < 0.3f)
+				{
+
+					EventBus<CursorDeflectEvent>.Invoke(new CursorDeflectEvent());
+					damage.Damage = 0;
+				}
+				else
+				{
+					blockHandler.DepleteDamage(damage);
+					EventBus<CursorBlockEvent>.Invoke(new CursorBlockEvent{RemainingBlockPower = blockHandler.RemainingBlockRate});
+				}
+			}
+
+			if (damage.Damage <= 0) return;
+			
 			var attr = _attributes;
 			attr.Health -= damage.Damage;
 			_attributes = attr;
