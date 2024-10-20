@@ -72,7 +72,7 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 
 		private void Awake()
 		{
-			_attributes = new Attributes { Damage = 5, Defence = 2, Health = 50, MaxHealth = 50 };
+			_attributes = new Attributes { Damage = 15, Defence = 2, Health = 50, MaxHealth = 50 };
 			_movement = GetComponent<IMovement>();
 			_attacker = GetComponent<IAttacker>();
 

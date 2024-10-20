@@ -63,7 +63,8 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 
 			transform.rotation = rot;
 
-			_locomotionAnimator.MovementInput = _movement.MovementInput;
+			_locomotionAnimator.MovementInput = new Vector2(_movement.Velocity.x, _movement.Velocity.z);
+			_locomotionAnimator.Update();
 		}
 
         public void ApplyDamage(DamageObject damage)
@@ -90,6 +91,7 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 
         private void Die()
         {
+	        Destroy(gameObject);
         }
     }
 }

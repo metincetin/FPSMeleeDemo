@@ -25,6 +25,10 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 
 		public void Update()
 		{
+			var movementInputRotation = Quaternion.Euler(0,_animator.transform.eulerAngles.y,0);
+
+			MovementInput = movementInputRotation * MovementInput;
+
 			_xValue = Mathf.SmoothDamp(_xValue, MovementInput.x, ref _xValueCurVel, SmoothTime);
 			_yValue = Mathf.SmoothDamp(_yValue, MovementInput.y, ref _yValueCurVel, SmoothTime);
 			_animator.SetFloat(MovementXHash, _xValue);

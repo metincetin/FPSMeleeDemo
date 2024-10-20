@@ -36,9 +36,12 @@ namespace FPSMeleeDemo.FPS
 
 		public event Action<DamageHitInfo> HitReceived;
 
+		private LayerMask _damageLayer;
+
 		private void Awake()
 		{
 			_rigidbody = GetComponent<Rigidbody>();
+			_damageLayer = LayerMask.GetMask("Default", "BodyPart");
 		}
 
 		public void Begin()
@@ -94,7 +97,7 @@ namespace FPSMeleeDemo.FPS
 
 				p.PreviousPosition = positionWorld;
 
-				if (Physics.Raycast(positionWorld, vel.normalized, out var hit, vel.magnitude))
+				if (Physics.Raycast(positionWorld, vel.normalized, out var hit, vel.magnitude, _damageLayer))
 				{
 					if (_ignores.Contains(hit.collider))
 					{
