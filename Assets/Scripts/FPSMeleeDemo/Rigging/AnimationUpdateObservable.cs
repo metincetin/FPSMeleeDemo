@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace FPSMeleeDemo.PhysicsModule
+namespace FPSMeleeDemo.Rigging
 {
     public class AnimationUpdateObservable : MonoBehaviour
 	{

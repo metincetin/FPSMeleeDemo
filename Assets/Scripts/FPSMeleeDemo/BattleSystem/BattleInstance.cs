@@ -5,7 +5,7 @@ using UnityEngine;
 namespace FPSMeleeDemo.BattleSystem
 {
 
-    public class BattleInstance
+	public class BattleInstance
 	{
 		IBattleCharacter[] _characters;
 
@@ -15,25 +15,33 @@ namespace FPSMeleeDemo.BattleSystem
 			AssignDependencies();
 		}
 
-        public IBattleCharacter GetOther(IBattleCharacter battleCharacter)
-        {
-			foreach(var b in _characters)
+		public IBattleCharacter GetOther(IBattleCharacter battleCharacter)
+		{
+			foreach (var b in _characters)
 			{
 				if (b != battleCharacter) return b;
 			}
 			return null;
-        }
+		}
 
-        private void AssignDependencies()
+		private void AssignDependencies()
 		{
-			foreach(var c in _characters)
+			foreach (var c in _characters)
 			{
 				var objects = (c as MonoBehaviour).GetComponentsInChildren<IBattleObject>();
-				foreach(var o in objects)
+				foreach (var o in objects)
 				{
 					o.BattleInstance = this;
 				}
 			}
+		}
+		public T GetCharacterOfType<T>() where T : IBattleCharacter
+		{
+			foreach (var c in _characters)
+			{
+				if (c is T casted) return casted;
+			}
+			return default(T);
 		}
 	}
 }

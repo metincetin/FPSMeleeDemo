@@ -3,6 +3,7 @@ using FPSMeleeDemo.Core;
 using FPSMeleeDemo.Data;
 using FPSMeleeDemo.FPS;
 using FPSMeleeDemo.Input;
+using FPSMeleeDemo.Montage;
 using FPSMeleeDemo.Movement;
 using FPSMeleeDemo.UI;
 using UnityEngine;
@@ -33,7 +34,9 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 
 		private CharacterLocomotionAnimator _locomotionAnimator;
 
-		public void ApplyDamage(DamageObject damage)
+        public event Action<DamageObject> DamageReceived;
+
+        public void ApplyDamage(DamageObject damage)
 		{
 
 			var blockHandler = _attacker.BlockHandler;
@@ -59,20 +62,28 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 			var attr = _attributes;
 			attr.Health -= damage.Damage;
 			_attributes = attr;
-
 			if (attr.Health <= 0)
 			{
 				Die();
 			}
+			DamageReceived?.Invoke(damage);
+
+			Debug.Log($"Player received Damage {_attributes.Health}");
 		}
 
 		private void Awake()
 		{
-			_attributes = new Attributes { Damage = 5, Defence = 2, Health = 50 };
+			_attributes = new Attributes { Damage = 5, Defence = 2, Health = 50, MaxHealth = 50 };
 			_movement = GetComponent<IMovement>();
 			_attacker = GetComponent<IAttacker>();
 
+			if (_movement is CharacterMovement characterMovement)
+			{
+				characterMovement.Manipulators.Add(new RootMotionVelocityManipulator(GetComponentInChildren<RootMotionController>()));
+			}
+
 			_locomotionAnimator = new CharacterLocomotionAnimator(GetComponentInChildren<Animator>());
+			_attacker.AnimationHandler = new PlayerAttackAnimationHandler(GetComponent<MontagePlayer>());
 		}
 
 		private void OnEnable()

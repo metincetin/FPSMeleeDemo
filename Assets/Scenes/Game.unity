@@ -849,6 +849,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 74269724951414783, guid: f8e09f0ff6332d8d6a3eecd1ef6b0809,
+        type: 3}
+      propertyPath: _battleController
+      value: 
+      objectReference: {fileID: 1288761139}
     - target: {fileID: 1563127801682305563, guid: f8e09f0ff6332d8d6a3eecd1ef6b0809,
         type: 3}
       propertyPath: m_Name

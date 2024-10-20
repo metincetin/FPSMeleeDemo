@@ -14,13 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _graphics: {fileID: 6486916002264326417, guid: c8652d7be2ac99dc5806a10980437c9e,
     type: 3}
-  _montagePairs:
+  _fpsMontagePairs:
     Left: {fileID: 11400000, guid: 0d299193b8fe49d3e9c867cefd972b29, type: 2}
     Right: {fileID: 11400000, guid: 8a33ed1786315afc8be0481854abc40d, type: 2}
     Up: {fileID: 11400000, guid: a50ce128cbfef407e868c0ab6bc69187, type: 2}
     Down: {fileID: 11400000, guid: d9f24c6c8ecd2f83a9e5f10201ad4bd6, type: 2}
-  _reversedPairs:
+  _fpsReversedPairs:
     Left: {fileID: 11400000, guid: d692518de9f8e5b15b968920afcc0361, type: 2}
     Right: {fileID: 11400000, guid: 377abb0aeaeb356c8944642c4efbdee8, type: 2}
     Up: {fileID: 11400000, guid: c6728efa92916d2d6950825800ca2ba8, type: 2}
     Down: {fileID: 11400000, guid: c6728efa92916d2d6950825800ca2ba8, type: 2}
+  _thirdPersonMontagePairs:
+    Left: {fileID: 11400000, guid: 35274726e6c66eb68abb6dedc1760229, type: 2}
+    Right: {fileID: 11400000, guid: 3d5c0bd4a1fd61c59a1452c94bedc37a, type: 2}
+    Up: {fileID: 11400000, guid: ebe57b366f69330dc967755668d60a02, type: 2}
+    Down: {fileID: 11400000, guid: 3d5c0bd4a1fd61c59a1452c94bedc37a, type: 2}
+  _thirdPersonReversedPairs:
+    Left: {fileID: 11400000, guid: 377abb0aeaeb356c8944642c4efbdee8, type: 2}
+    Right: {fileID: 11400000, guid: 377abb0aeaeb356c8944642c4efbdee8, type: 2}
+    Up: {fileID: 11400000, guid: 377abb0aeaeb356c8944642c4efbdee8, type: 2}
+    Down: {fileID: 11400000, guid: 377abb0aeaeb356c8944642c4efbdee8, type: 2}

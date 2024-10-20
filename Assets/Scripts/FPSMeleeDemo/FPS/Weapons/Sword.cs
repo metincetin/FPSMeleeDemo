@@ -16,14 +16,38 @@ namespace FPSMeleeDemo.Data
 		}
 
 		[SerializeField]
-		private CardinalAttackMontagePair _montagePairs;
+		private CardinalAttackMontagePair _fpsMontagePairs;
 
 		[SerializeField]
-		private CardinalAttackMontagePair _reversedPairs;
+		private CardinalAttackMontagePair _fpsReversedPairs;
 
-        public override PlayableAsset GetMontage(CardinalDirection direction, bool reversed = false)
+		[SerializeField]
+		private CardinalAttackMontagePair _thirdPersonMontagePairs;
+
+		[SerializeField]
+		private CardinalAttackMontagePair _thirdPersonReversedPairs;
+
+        public override PlayableAsset GetThirdPersonMontage(CardinalDirection direction, bool reversed = false)
+		{
+			var pairs = reversed ? _thirdPersonReversedPairs: _thirdPersonMontagePairs;
+
+			switch (direction)
+			{
+				case CardinalDirection.West:
+					return pairs.Left;
+				case CardinalDirection.East:
+					return pairs.Right;
+				case CardinalDirection.North:
+					return pairs.Up;
+				case CardinalDirection.South:
+					return pairs.Down;
+			}
+			return pairs.Up;
+		}
+
+        public override PlayableAsset GetFPSMontage(CardinalDirection direction, bool reversed = false)
         {
-			var pairs = reversed ? _reversedPairs : _montagePairs;
+			var pairs = reversed ? _fpsReversedPairs : _fpsMontagePairs;
 
 			switch (direction)
 			{

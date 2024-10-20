@@ -10,13 +10,7 @@ using UnityEngine;
 
 namespace FPSMeleeDemo.FPS
 {
-	
-	public interface IAttackStateProvider
-	{
-		public bool IsAttacking { get; }
-	}
-	
-    public class Attacker : MonoBehaviour, IAttacker, IWeaponInstanceContainer, IDamageCauser, IAttackStateProvider
+	public class Attacker : MonoBehaviour, IAttacker, IWeaponInstanceContainer, IDamageCauser, IAttackStateProvider
 	{
 		[SerializeField]
 		private Weapon _weapon;
@@ -28,16 +22,16 @@ namespace FPSMeleeDemo.FPS
 
 		public WeaponInstance WeaponInstance { get; private set; }
 
-		private AttackAnimationHandler _attackAnimationHandler;
+		public AttackAnimationHandler AnimationHandler { get; set; }
 
 		private IAttackerFXFactory _fxFactory;
 
 		private BlockHandler _blockHandler;
 		public BlockHandler BlockHandler => _blockHandler;
 
-        bool IAttackStateProvider.IsAttacking => _attackAnimationHandler.IsAttacking;
+		bool IAttackStateProvider.IsAttacking => AnimationHandler.IsAttacking;
 
-        [SerializeField]
+		[SerializeField]
 		private Transform _weaponPoint;
 
 		private IDamageCauser _damageCauser;
@@ -51,7 +45,6 @@ namespace FPSMeleeDemo.FPS
 		private void Awake()
 		{
 			_damageCauser = GetComponent<IDamageCauser>();
-			_attackAnimationHandler = new AttackAnimationHandler(GetComponent<MontagePlayer>());
 			_fxFactory = Resources.Load<AttackerFXFactory>("Factories/AttackerFXFactory");
 
 			if (_weapon)
@@ -88,7 +81,7 @@ namespace FPSMeleeDemo.FPS
 
 		private void OnDamageAreaHitReceived(DamageArea.DamageHitInfo info)
 		{
-			_attackAnimationHandler.OnAttackHitReceived(info);
+			AnimationHandler.OnAttackHitReceived(info);
 
 			_fxFactory.CreateHitEffect(info);
 
@@ -116,9 +109,9 @@ namespace FPSMeleeDemo.FPS
 
 		public void Attack(Vector2 direction)
 		{
-			if (_attackAnimationHandler.IsAttacking) return;
-			_attackAnimationHandler.Weapon = _weapon;
-			_attackAnimationHandler.Play(direction.ToCardinal());
+			if (AnimationHandler.IsAttacking) return;
+			AnimationHandler.Weapon = _weapon;
+			AnimationHandler.Play(direction.ToCardinal());
 
 			_blockHandler.AddBlockPower(_blockPowerPerSecond * Time.deltaTime);
 		}
@@ -128,12 +121,12 @@ namespace FPSMeleeDemo.FPS
 			if (value)
 			{
 				_blockHandler.BeginBlock();
-				_attackAnimationHandler.BeginBlock();
+				AnimationHandler.BeginBlock();
 			}
 			else
 			{
 				_blockHandler.EndBlock();
-				_attackAnimationHandler.EndBlock();
+				AnimationHandler.EndBlock();
 			}
 
 		}

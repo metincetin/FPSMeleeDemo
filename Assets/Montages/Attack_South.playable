@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Tracks:
   - {fileID: -2474383707522796920}
   - {fileID: 7669453717346147024}
+  - {fileID: 7803816745555263434}
   m_FixedDuration: 0
   m_EditorSettings:
     m_Framerate: 60
@@ -295,3 +296,114 @@ MonoBehaviour:
     m_DisplayName: DamageActivatorPlayableAsset
   m_Markers:
     m_Objects: []
+--- !u!114 &7803816745555263434
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82cd92ffc29383742932b27ca414c80f, type: 3}
+  m_Name: Playable Track (1)
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips:
+  - m_Version: 1
+    m_Start: 0.7
+    m_ClipIn: 0
+    m_Asset: {fileID: 8876903067249460075}
+    m_Duration: 0.6000000000000002
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 7803816745555263434}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: AudioPlayer
+  m_Markers:
+    m_Objects: []
+--- !u!114 &8876903067249460075
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f8052c9d98b4fd0a035cdf8c9f74ef2, type: 3}
+  m_Name: AudioPlayerPlayableAsset
+  m_EditorClassIdentifier: 
+  AudioSource:
+    exposedName: 79b51abad9e7c2b4eba7b54664358a13
+    defaultValue: {fileID: 0}
+  Clips:
+  - {fileID: 8300000, guid: 4c3efdbc4286abc33b256d53a468e304, type: 3}
+  - {fileID: 8300000, guid: a4c8bc47fb13fdb9db9a91c12e071a8a, type: 3}
+  - {fileID: 8300000, guid: 0601020821b9012eca097933c10d2109, type: 3}

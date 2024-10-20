@@ -1,10 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using FPSMeleeDemo.PhysicsModule;
 using UnityEngine;
 
-namespace FPSMeleeDemo.PhysicsModule
+namespace FPSMeleeDemo.Rigging
 {
 
     public class AnimatedRigApplier : MonoBehaviour

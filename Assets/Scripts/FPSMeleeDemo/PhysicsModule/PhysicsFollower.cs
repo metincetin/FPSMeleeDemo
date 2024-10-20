@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using FPSMeleeDemo.Rigging;
 using UnityEngine;
 
 namespace FPSMeleeDemo.PhysicsModule

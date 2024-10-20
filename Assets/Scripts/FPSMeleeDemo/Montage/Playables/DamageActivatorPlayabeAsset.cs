@@ -2,10 +2,10 @@ using System;
 using FPSMeleeDemo.FPS;
 using UnityEngine;
 using UnityEngine.Playables;
+using Random = UnityEngine.Random;
 
 namespace FPSMeleeDemo.Montage.Playables
 {
-
 	[Serializable]
 	public class DamageActivatorPlayableAsset : PlayableAsset
 	{
