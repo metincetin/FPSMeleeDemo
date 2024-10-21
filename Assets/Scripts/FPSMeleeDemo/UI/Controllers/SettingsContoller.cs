@@ -1,3 +1,4 @@
+using System;
 using FPSMeleeDemo.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -5,51 +6,42 @@ using UnityEngine.UIElements;
 
 namespace FPSMeleeDemo.UI.Tests
 {
-	public class SettingContainer : MonoBehaviour
+    public class SettingsController : MonoBehaviour
 	{
-		[SerializeField]
-		private UIDocument _document;
-
 		[SerializeField]
 		private InputFeeder _inputFeeder;
 
-        private Button _settingsButton;
-        private VisualElement _settingsPanel;
+		private Settings _settings;
 
-        private void Awake()
+		private void Awake()
 		{
-			_settingsButton = _document.rootVisualElement.Q<Button>("SettingsButton");
-			_settingsPanel = _document.rootVisualElement.Q("Settings");
+			_settings = GetComponent<Settings>();
 		}
 
 		private void OnEnable()
 		{
-			_settingsButton.clicked += OnSettingsButtonClicked;
 			_inputFeeder.GameInput.UI.ToggleSettings.performed += OnToggleSettingsPerformed;
 		}
 
 		private void OnDisable()
 		{
-			_settingsButton.clicked += OnSettingsButtonClicked;
 			_inputFeeder.GameInput.UI.ToggleSettings.performed -= OnToggleSettingsPerformed;
 		}
 
-        private void OnToggleSettingsPerformed(InputAction.CallbackContext context)
-        {
+		private void OnToggleSettingsPerformed(InputAction.CallbackContext context)
+		{
 			ToggleSettings();
-        }
-
-        private void OnSettingsButtonClicked()
-        {
-			ToggleSettings();
-			_settingsButton.Blur();
-        }
+		}
 
 		private void ToggleSettings()
 		{
-			_settingsPanel.ToggleInClassList("hidden");
+			var value = !_settings.IsOpen;
 
-			_inputFeeder.SetCursorState(!_settingsPanel.ClassListContains("hidden"));
+			if (value) _settings.Open();
+			else
+				_settings.Close();
+
+			_inputFeeder.SetCursorState(value);
 		}
-    }
+	}
 }
