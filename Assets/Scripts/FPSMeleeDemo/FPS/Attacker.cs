@@ -65,7 +65,11 @@ namespace FPSMeleeDemo.FPS
 			if (damageArea)
 			{
 				damageArea.HitReceived += OnDamageAreaHitReceived;
-				damageArea.AddIgnore(GetComponent<Collider>());
+				var selfColliders = GetComponentsInChildren<Collider>();
+				foreach(var c in selfColliders)
+				{
+					damageArea.AddIgnore(c);
+				}
 			}
 		}
 
