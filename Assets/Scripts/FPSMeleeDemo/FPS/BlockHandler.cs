@@ -46,13 +46,13 @@ namespace FPSMeleeDemo.FPS
 			if (diff > 0)
 			{
 				_blockPower -= damage.Damage;
+				damage.Damage = 0;
 			}
 			else
 			{
+				damage.Damage -= _blockPower;
 				_blockPower = 0;
 			}
-
-			damage.Damage = Mathf.Max(0, Mathf.Max(0, diff));
 		}
 	}
 }
