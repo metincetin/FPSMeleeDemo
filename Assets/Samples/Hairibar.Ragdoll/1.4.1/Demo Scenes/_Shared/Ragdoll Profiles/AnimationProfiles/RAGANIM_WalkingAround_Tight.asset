@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   definition: {fileID: 11400000, guid: 840cf89373122a54cb2fe8d8c1ce40f0, type: 2}
   _isValid: 1
-  globalPositionAlpha: 0.3
+  globalPositionAlpha: 0.6
   globalPositionDampingRatio: 1
   globalMaxLinearAcceleration: Infinity
   positionMatchingOverrides: []
   rotationMatchingOverrides: []
-  globalRotationAlpha: 0.3
-  globalRotationDampingRatio: 1
+  globalRotationAlpha: 0.14776117
+  globalRotationDampingRatio: 0.509
   globalMaxAngularAcceleration: Infinity
-  matchRootRotation: 1
+  matchRootRotation: 0
