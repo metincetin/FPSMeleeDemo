@@ -1,6 +1,8 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 namespace FPSMeleeDemo.UI.Tests
 {
@@ -19,12 +21,60 @@ namespace FPSMeleeDemo.UI.Tests
 
 		public bool IsOpen => _canvas.enabled;
 
+		[SerializeField]
+		private Button _restartButton;
+
+		[SerializeField]
+		private Button _videoButton;
+
+		private readonly string[] QualityTexts = new string[]
+		{
+			"Low",
+			"Medium",
+			"High"
+		};
+
 		private void Awake()
 		{
 			_raycaster = GetComponent<GraphicRaycaster>();
 			_canvas = GetComponent<Canvas>();
 
 			_contentCanvasGroup.alpha = 0;
+		}
+		
+		private void OnEnable()
+		{
+			_videoButton.onClick.AddListener(AddQualityLevel);
+			_restartButton.onClick.AddListener(OnRestartButtonPressed);
+		}
+		
+		private void OnDisable()
+		{
+			_videoButton.onClick.RemoveListener(AddQualityLevel);
+			_restartButton.onClick.RemoveListener(OnRestartButtonPressed);
+		}
+
+		private void OnRestartButtonPressed()
+		{
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		}
+
+		private void Start()
+		{
+			UpdateVideoText();
+		}
+		
+		private void AddQualityLevel()
+		{
+			QualitySettings.SetQualityLevel((QualitySettings.GetQualityLevel() + 1) % 3);
+			UpdateVideoText();
+		}
+		
+		private void UpdateVideoText()
+		{
+			
+			var qualityIndex = QualitySettings.GetQualityLevel();
+			_videoButton.GetComponentInChildren<TMP_Text>().text = QualityTexts[qualityIndex];
 		}
 
 		private Tween CreateToggleTween()

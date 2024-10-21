@@ -14,5 +14,10 @@ namespace FPSMeleeDemo.BattleSystem
 		{
 			CurrentBattle = new BattleInstance(settings.Characters);
 		}
+
+		public void EndBattle()
+		{
+			CurrentBattle.End();
+		}
 	}
 }

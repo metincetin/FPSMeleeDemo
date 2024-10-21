@@ -14,6 +14,9 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 
     public class PlayerBattleCharacter : MonoBehaviour, IBattleCharacter, IDamageReceiver
 	{
+		public struct PlayerDeathEvent: IEvent { }
+		public struct PlayerDamageEvent: IEvent { }
+		
 		private Attributes _attributes;
 		public Attributes Attributes => _attributes;
 
@@ -66,6 +69,8 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 				Die();
 			}
 			DamageReceived?.Invoke(damage);
+			
+			EventBus<PlayerDamageEvent>.Invoke(new PlayerDamageEvent());
 
 			Debug.Log($"Player received Damage {_attributes.Health}");
 		}
@@ -152,7 +157,10 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 
 		public void Die()
 		{
-			Debug.Log("You died!");
+			EventBus<PlayerDeathEvent>.Invoke(new PlayerDeathEvent());
+			
+			_inputFeeder.GameInput.Player.Disable();
+			_inputFeeder.SetCursorState(true);
 		}
 
 		private void Update()
@@ -174,6 +182,10 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 
 			if (input.magnitude > 0)
 				_lastMovement = input;
+		}
+		
+		public void OnBattleEnded()
+		{
 		}
 	}
 }

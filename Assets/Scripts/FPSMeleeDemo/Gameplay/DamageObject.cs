@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace FPSMeleeDemo.Gameplay
 {
-    public struct DamageObject
+    public class DamageObject
 	{
 		public float Damage;
 		public bool IsCritical;

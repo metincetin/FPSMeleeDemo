@@ -1,4 +1,3 @@
-using System.Collections;
 using FPSMeleeDemo.Data;
 using FPSMeleeDemo.Montage;
 using UnityEngine;
@@ -10,7 +9,6 @@ namespace FPSMeleeDemo.FPS
 	{
 		private MontagePlayer _montagePlayer;
 		private Animator _animator;
-		private Coroutine _bounceCoroutine;
 
 
 		private CardinalDirection _attackDirection;
@@ -53,36 +51,9 @@ namespace FPSMeleeDemo.FPS
 
 		public override void OnAttackHitReceived(DamageArea.DamageHitInfo info)
 		{
-			// _bounceCoroutine = _montagePlayer.StartCoroutine(BounceCoroutine(info));
-			var t = _montagePlayer.PlayableDirector.time;
-			var max = _montagePlayer.PlayableDirector.playableAsset.duration;
-			_montagePlayer.PlayMontage(RequestMontage(_attackDirection, true));
-			// _montagePlayer.PlayableDirector.time = max - t;
-		}
-
-		private IEnumerator BounceCoroutine(DamageArea.DamageHitInfo info)
-		{
-			float t = 0;
-
-			_montagePlayer.PlayableDirector.timeUpdateMode = DirectorUpdateMode.Manual;
-
-			while (_montagePlayer.PlayableDirector.time > 0)
-			{
-
-				_montagePlayer.PlayableDirector.time -= Time.deltaTime * 0.2;
-				_montagePlayer.PlayableDirector.DeferredEvaluate();
-
-				t += Time.deltaTime;
-
-				yield return new WaitForEndOfFrame();
-			}
-			ResetBounce();
-		}
-
-		private void ResetBounce()
-		{
-			_montagePlayer.PlayableDirector.timeUpdateMode = DirectorUpdateMode.GameTime;
-			_montagePlayer.PlayableDirector.time = 0;
+			var montage = RequestMontage(_attackDirection, true);
+			if (montage)
+				_montagePlayer.PlayMontage(RequestMontage(_attackDirection, true));
 		}
 		public override void BeginBlock()
 		{

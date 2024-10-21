@@ -59,5 +59,10 @@ namespace FPSMeleeDemo.AI
 				AIBehaviour.Update();
 			}
 		}
+
+		public void End()
+		{
+			if (AIBehaviour) AIBehaviour.End();
+		}
 	}
 }

@@ -43,6 +43,14 @@ namespace FPSMeleeDemo.BattleSystem
 			}
 			return default(T);
 		}
+
+		public void End()
+		{
+			foreach(var c in _characters)
+			{
+				c.OnBattleEnded();
+			}
+		}
 	}
 }
 

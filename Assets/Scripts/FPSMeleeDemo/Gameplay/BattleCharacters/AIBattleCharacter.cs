@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FPSMeleeDemo.AI;
 using FPSMeleeDemo.BattleSystem;
+using FPSMeleeDemo.Core;
 using FPSMeleeDemo.Data;
 using FPSMeleeDemo.FPS;
 using FPSMeleeDemo.Montage;
@@ -11,37 +13,11 @@ using UnityEngine;
 
 namespace FPSMeleeDemo.Gameplay.BattleCharacters
 {
-	public class ImpactAnimator
-	{
-        private readonly Animator _animator;
-
-        public ImpactAnimator(Animator animator)
-		{
-			_animator = animator;
-		}
-
-		public void PlayHit(Vector3 hitVector)
-		{
-			hitVector = _animator.transform.TransformDirection(hitVector);
-			_animator.SetTrigger("Hit");
-			var horizontal = 0f;
-			if (Mathf.Abs(hitVector.x) > Mathf.Abs(hitVector.z))
-			{
-				horizontal = hitVector.x;
-			}
-			else
-			{
-				horizontal = hitVector.z;
-			}
-
-			_animator.SetFloat("HitDirectionX", horizontal);
-			_animator.SetFloat("HitDirectionY", hitVector.y);
-		}
-	}
-
 	public class AIBattleCharacter : MonoBehaviour, IBattleCharacter, IBattleObject
 	{
+		public struct AIDeathEvent : IEvent { }
 		public Attributes Attributes { get; private set; }
+
 		public BattleInstance BattleInstance { get; set; }
 		
 		private CharacterLocomotionAnimator _locomotionAnimator;
@@ -50,8 +26,10 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 		private IMovement _movement;
 
 		private IAttacker _attacker;
+		
+		private bool _isDead;
 
-        public event Action<DamageObject> DamageReceived;
+		public event Action<DamageObject> DamageReceived;
 
         private void Awake()
 		{
@@ -83,6 +61,7 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 
 		public void Update()
 		{
+			if (_isDead) return;
 			var target = BattleInstance.GetOther(this);
 
 			if (target is not MonoBehaviour mb) return;
@@ -126,7 +105,26 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 
         private void Die()
         {
-	        Destroy(gameObject);
+	        if (_isDead) return;
+	        _isDead = true;
+	        EventBus<AIDeathEvent>.Invoke(new AIDeathEvent());
+	        var ragdollSwitcher = GetComponentInChildren<RagdollSwitcher>();
+	        if (ragdollSwitcher)
+			{
+				ragdollSwitcher.SetRagdoll();
+			}
+	        if (TryGetComponent<CharacterController>(out var characterController))
+	        {
+		        characterController.enabled = false;
+	        }
+        }
+        
+        public void OnBattleEnded()
+        {
+	        if (TryGetComponent<AIController>(out var aiController))
+	        {
+		        aiController.End();
+	        }
         }
     }
 }

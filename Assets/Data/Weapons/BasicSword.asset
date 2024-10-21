@@ -30,7 +30,7 @@ MonoBehaviour:
     Up: {fileID: 11400000, guid: ebe57b366f69330dc967755668d60a02, type: 2}
     Down: {fileID: 11400000, guid: 3d5c0bd4a1fd61c59a1452c94bedc37a, type: 2}
   _thirdPersonReversedPairs:
-    Left: {fileID: 11400000, guid: 377abb0aeaeb356c8944642c4efbdee8, type: 2}
-    Right: {fileID: 11400000, guid: 377abb0aeaeb356c8944642c4efbdee8, type: 2}
-    Up: {fileID: 11400000, guid: 377abb0aeaeb356c8944642c4efbdee8, type: 2}
-    Down: {fileID: 11400000, guid: 377abb0aeaeb356c8944642c4efbdee8, type: 2}
+    Left: {fileID: 11400000, guid: 26c3ebc2b16a6dd83a642970459547b8, type: 2}
+    Right: {fileID: 11400000, guid: e5956a1acab57b1a1a718405abcb5d73, type: 2}
+    Up: {fileID: 0}
+    Down: {fileID: 11400000, guid: e5956a1acab57b1a1a718405abcb5d73, type: 2}
