@@ -429,8 +429,8 @@ MonoBehaviour:
   _alignToOrientation: 1
   _characterController: {fileID: 4184140178626676176}
   _movementSpeed: 6
-  _jumpPower: 5
-  _dashPower: 60
+  _jumpPower: 0
+  _dashPower: 30
 --- !u!143 &4184140178626676176
 CharacterController:
   m_ObjectHideFlags: 0
@@ -594,8 +594,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    m_ImpulseDuration: 0.2
-    m_ImpulseType: 2
+    m_ImpulseDuration: 0.4
+    m_ImpulseType: 0
     m_DissipationRate: 0.25
     m_RawSignal: {fileID: 0}
     m_AmplitudeGain: 1
@@ -2228,11 +2228,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: b523cb813639ab95fbe527b45544d9d9,
         type: 3}
       propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'mixamorig:Spine1'\n\tTransform 'mixamorig:Spine'\n\tTransform
-        'mixamorig:Spine1'\n\tTransform 'mixamorig:Spine'\n\tTransform 'mixamorig:Spine1'\n\tTransform
-        'mixamorig:Spine'"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: b523cb813639ab95fbe527b45544d9d9,
         type: 3}

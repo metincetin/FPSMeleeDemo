@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FPSMeleeDemo.Rigging;
 using UnityEngine;
 
 namespace FPSMeleeDemo.FPS
@@ -128,7 +129,12 @@ namespace FPSMeleeDemo.FPS
 					{
 						var bouncePower = Vector3.Dot(-hit.normal, effectiveVel);
 						Debug.DrawRay(hit.point, -hit.normal * bouncePower, Color.yellow, 5);
-						hit.rigidbody.AddForceAtPosition(hit.normal * bouncePower * 360, hit.point, ForceMode.Impulse);
+						if (hit.rigidbody.isKinematic && hit.rigidbody.TryGetComponent<BodyPart>(out var part))
+						{
+							part.SimulateHitImpact(hit.normal * bouncePower, hit.point);
+						}
+						else
+							hit.rigidbody.AddForceAtPosition(hit.normal * bouncePower * 360, hit.point, ForceMode.Impulse);
 					}
 
 					_hits.Add(hit.collider);

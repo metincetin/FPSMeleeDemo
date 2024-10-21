@@ -96,6 +96,8 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 			_inputFeeder.GameInput.Player.Block.canceled += OnBlockCanceled;
 
 			_inputFeeder.SetCursorState(false);
+
+			_attacker.DamageCaused += OnDamageCaused;
 		}
 
 		private void OnDisable()
@@ -109,6 +111,14 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 			_inputFeeder.GameInput.Player.Block.canceled -= OnBlockCanceled;
 
 			_inputFeeder.SetCursorState(true);
+			
+			_attacker.DamageCaused += OnDamageCaused;
+		}
+
+		private void OnDamageCaused(IDamageReceiver receiver, DamageObject damage)
+		{
+			EventBus<CursorDamageEvent>.Invoke(new CursorDamageEvent());
+			EventBus<DamageCursorInvoker.DamageTextEvent>.Invoke(new DamageCursorInvoker.DamageTextEvent { Object = damage });
 		}
 
 

@@ -139,6 +139,7 @@ namespace FPSMeleeDemo.UI
 
 		public void ShowDamage()
 		{
+			_animationHandler.PlayDamage();
 		}
 
 		private void OnValidate()

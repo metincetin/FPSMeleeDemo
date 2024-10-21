@@ -8,8 +8,9 @@ namespace FPSMeleeDemo.Gameplay
 		private float _damage;
 		private bool _isCritical;
 		private Vector3 _damagePosition;
+        private Vector3 _velocity;
 
-		public static DamageBuilder Create(float damage = 0)
+        public static DamageBuilder Create(float damage = 0)
 		{
 			return new DamageBuilder().SetBaseDamage(damage);
 		}
@@ -17,6 +18,12 @@ namespace FPSMeleeDemo.Gameplay
 		public DamageBuilder SetCauser(IDamageCauser value)
 		{
 			this._causer = value;
+			return this;
+		}
+
+		public DamageBuilder SetVelocity(Vector3 value)
+		{
+			_velocity = value;
 			return this;
 		}
 
@@ -56,7 +63,8 @@ namespace FPSMeleeDemo.Gameplay
 				Damage = _damage,
 				Causer = _causer,
 				IsCritical = _isCritical,
-				DamagePosition = _damagePosition
+				DamagePosition = _damagePosition,
+				DamageVelocity = _velocity
 			};
 		}
 	}

@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace FPSMeleeDemo.Gameplay.BattleCharacters
 {
-    public class CharacterLocomotionAnimator
+	public class CharacterLocomotionAnimator
 	{
 		public Vector2 MovementInput;
-        private Animator _animator;
+		private Animator _animator;
 
 		private readonly int MovementXHash = Animator.StringToHash("MovementX");
 		private readonly int MovementYHash = Animator.StringToHash("MovementY");
@@ -18,16 +18,15 @@ namespace FPSMeleeDemo.Gameplay.BattleCharacters
 
 		private const float SmoothTime = .2f;
 
-        public CharacterLocomotionAnimator(Animator animator)
+		public CharacterLocomotionAnimator(Animator animator)
 		{
 			_animator = animator;
 		}
 
 		public void Update()
 		{
-			var movementInputRotation = Quaternion.Euler(0,_animator.transform.eulerAngles.y,0);
-
-			MovementInput = movementInputRotation * MovementInput;
+			var rot = _animator.transform.parent.eulerAngles.y;
+			MovementInput = Quaternion.Euler(0, 0, rot) * MovementInput;
 
 			_xValue = Mathf.SmoothDamp(_xValue, MovementInput.x, ref _xValueCurVel, SmoothTime);
 			_yValue = Mathf.SmoothDamp(_yValue, MovementInput.y, ref _yValueCurVel, SmoothTime);

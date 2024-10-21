@@ -108,6 +108,7 @@ namespace FPSMeleeDemo.FPS
 
 			var damage = DamageBuilder.Create(5)
 				.SetCauser(_damageCauser)
+				.SetVelocity(info.RelativeVelocity)
 				.SetDamagePosition(info.Point);
 
 			if (bodyPart)
